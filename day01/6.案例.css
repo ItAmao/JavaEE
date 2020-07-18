@@ -1,0 +1,19 @@
+.one {
+    color: red;
+}
+
+.two {
+    font-weight: bold;
+    font-style: oblique;
+}
+
+h1 {
+    text-align: center;
+    font-size: 40px;
+}
+.six {
+    text-align: center;
+    color: gray;
+    font-size: 12px;
+    text-indent: 2em;
+}
