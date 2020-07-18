@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+        //1.入口函数
+        $(function () {
+            //     <input type="button" value="改变id为one的元素的背景色为红色" id="b1">
+            //2.给b1按钮添加事件.获取b1
+            $("#b1").click(function () {
+                $("#one").css("backgroundColor", "red");
+            });
+            //     <input type="button" value="改变元素名为<div>的所有元素的背景色为红色" id="b2">
+            $("#b2").click(function () {
+                $("div").css("backgroundColor", "red");
+            });
+            //     <input type="button" value="改变clss为mini的所有元素的背景色为红色" id="b3">
+            $("#b3").click(function () {
+                $(".mini").css("backgroundColor", "red");
+            });
+            //     <input type="button" value="改变所有的<span>元素和id为two的元素的背景色为红色" id="b4">
+            $("#b3").click(function () {
+                $("span,#two").css("backgroundColor", "red");
+            });
+        });
+
+
+
+
+    </script>
+
+
+</head>
+<body>
+<input type="button" value="保存" class="mini" name="ok">
+<input type="button" value="改变id为one的元素的背景色为红色" id="b1">
+<input type="button" value="改变元素名为<div>的所有元素的背景色为红色" id="b2">
+<input type="button" value="改变clss为mini的所有元素的背景色为红色" id="b3">
+<input type="button" value="改变所有的<span>元素和id为two的元素的背景色为红色" id="b4">
+<div id="a"></div>
+</body>
+</html>

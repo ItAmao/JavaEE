@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/jquery-3.5.1.js"></script>
+    <style>
+        .aaa {
+            color: pink;
+        }
+
+    </style>
+</head>
+<body>
+<div id="d1">你好,阿毛</div>
+<div id="d2" class="aaa">我是,马云</div>
+
+<script>
+    //直接在js中写css的代码
+    //$("div").css("color","red");
+
+    //jq对象.addClass()
+    $("#d1").addClass("aaa");
+
+    //jq对象.removeClass()
+    //这个删除方法只会删除class的值,不会删除键,因为class里边有可能存在2个属性值
+    $("#d1").removeClass("aaa");
+
+    //jq对象.toggleClass()
+    //toggleClass() 对设置或移除被选元素的一个或多个类进行切换。
+    // 该方法检查每个元素中指定的类。如果不存在则添加类，如果已设置则删除之。这就是所谓的切换效果。
+    $("#d1").toggleClass("aaa");
+    $("#d2").toggleClass("aaa");
+
+</script>
+</body>
+</html>

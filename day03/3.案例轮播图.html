@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .next {
+            float: right;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            let img = document.getElementById("a1");
+            let num = 1;
+
+            function method1() {
+                num++;
+                if (num > 3) {
+                    num = 1;
+                }
+                img.src = "imges/banner_" + num + ".jpg"
+            }
+
+            let id = setInterval(method1, 3000);
+
+            //给按钮绑定监听事件
+            document.getElementById("next").onclick = function () {
+                //下一张
+                num++;
+                if (num > 3) {
+                    num = 1;
+                }
+                img.src = "imges/banner_" + num + ".jpg"
+                //关闭定时器
+                clearInterval(id);
+
+                //然后在开启,重新计时
+                id = setInterval(method1, 3000);
+            }
+
+            //给按钮绑定监听事件
+            document.getElementById("before").onclick = function () {
+                //上一张
+                num--;
+                if (num < 1) {
+                    num = 3;
+                }
+                img.src = "imges/banner_" + num + ".jpg"
+                //关闭定时器
+                clearInterval(id);
+
+                //然后在开启,重新计时
+                id = setInterval(method1, 3000);
+            }
+
+        }
+    </script>
+</head>
+<body>
+<img id="a1" src="imges/banner_1.jpg" width="100%">
+
+<input type="button" value="上一张" class="before" id="before">
+<input type="button" value="下一张" class="next" id="next">
+</body>
+</html>

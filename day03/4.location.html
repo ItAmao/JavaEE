@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        //方法:
+        //重写加载
+        window.onload = function () {
+            let input = document.getElementById("a1")
+            input.onclick = function () {
+                location.reload();
+            }
+
+            //属性
+            //href
+            alert(location.href);
+            //修改url地址
+            location.href = "http://www.baidu.com";
+        }
+
+
+    </script>
+</head>
+<body>
+用户名:<input type="text" value="">
+<input type="button" value="刷新" id="a1">
+</body>
+</html>

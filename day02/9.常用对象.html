@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        //字符串-----------------------------
+        let s1 = "abc";
+        let s2 = new String("abc");
+
+        //alert(typeof s1);//string
+        //alert(typeof s2);//object
+        //alert(s1 == s2);  //值 true
+        //alert(s1 === s2); //类型和值  false
+
+        //字符串拼接
+        let s3 = "黑马" + 6 + 6 + 6;
+        let s4 = `黑马${666}`;    //直接把要拼接的内容放在{}中
+        //alert(s3);
+        //alert(s4);
+        //黑马666
+        //alert(s3.substring(2,5));  //截取666
+        let s5 = "just do IT";
+        //alert(s5.toLowerCase());  //just do it
+        //alert(s5.toUpperCase());  //JUST DO IT
+        //alert(s5.trim());         //去除两端的空白
+        //alert(s5.charAt(3));      //t
+
+
+        //Array----------------------------------
+        //直接定义数字
+        //let arr = [11,22,33,44,55];
+        //new方式
+        let arr = new Array("abc",true,33,44,55);
+        //new方式指定数组长度
+        //如果()中只有一个数字,认为这是长度
+        //let arr = new Array(5);
+
+
+        //给数组末尾添加元素
+        arr.push(66);
+        arr.push(88);
+        //给10索引赋值为100
+        arr[10] = 100;
+
+        //alert(typeof arr[8]); //没有赋值的元素是undefined
+
+        //把数组变成一个字符串,可以指定分隔符,如果不指定默认是,
+        //alert(arr.join());  //  11,22,33,44,55
+        //alert(arr.join("/")); //  11/22/33/44/55
+
+        //属性
+        //alert(arr.length);  //length表示数组的长度 11
+
+
+
+        //Date对象--------------------------------------
+        let date = new Date();
+        // alert(date.toLocaleString()); //2020/7/10 下午3:34:34
+        // alert(date.getTime());           //1594366433127
+        // alert(date.getFullYear());  //年
+        // alert(date.getMonth()+1);   //保存的月0~11
+        // alert(date.getDate());      //日期
+
+        //Math对象-------------------------------------------
+        // alert(Math.random());
+        // alert(Math.ceil(3.14));  //4
+        // alert(Math.floor(3.14)); //3
+        // alert(Math.round(3.45)); //3
+        // alert(Math.PI);             //圆周率
+
+        //全局函数
+        let a = "石原里美";
+        //编码
+        let b = encodeURI(a);
+        //alert("编码后"+b);   //%E7%9F%B3%E5%8E%9F%E9%87%8C%E7%BE%8E
+        //解码
+        let c = decodeURI(b);
+        //alert("解码后"+c);  //石原里美
+
+        //把字符串转成整数
+        let number = parseInt("23423estfs");
+        //alert(number);   //23423
+
+        //判断变量的值是否是NaN
+        let q = "a";
+        //+号会把string变成number,而"a"无法变成数字所以是NaN
+        //alert(isNaN(+q));  //true
+
+        //alert(NaN == NaN);   //NaN六亲不认,连自己都不认。 false
+
+        let ss = "alert(123);";
+
+        eval(ss); //把字符串解析成代码
+    </script>
+</head>
+<body>
+
+</body>
+</html>

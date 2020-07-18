@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/jquery-3.5.1.js"></script>
+</head>
+<body>
+<ol>
+    <li>北京</li>
+    <li>天津</li>
+    <li>上海</li>
+    <li>广州</li>
+</ol>
+
+<script>
+    //jq对象.prepend() 在父标签中将字标签放在第一个位置
+    $("ol").prepend("<li>湖南</li>");
+
+    //jq对象.append() 在父标签中将字标签放在最后一个位置
+    $("ol").append("<li>常德</li>");
+
+    //jq对象.empty() 情况子元素
+    // $("ol").empty();        //清空ol在所有的东西
+     $("ol>li").empty();     //清空li里边的内容
+
+    //jq对象.remove()            删除自己
+    //$("ol").remove();
+
+</script>
+</body>
+</html>

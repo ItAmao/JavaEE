@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+
+
+    </script>
+</head>
+<body>
+<img id="a" src="imges/1.jpg">
+<form action="#" method="get">
+    <input id="b" type="text">
+</form>
+
+<script>
+    //1.获取id为a的值,id为b的值
+    let a = document.getElementById("a");
+    let b = document.getElementById("b");
+
+    // //2.定义方法
+    function method1() {
+        alert("事件被触发了");
+    }
+
+    //
+    // //3调用方法
+    // //a.onclick = method1; //单机事件
+    // b.ondblclick = method1; //双击事件
+    //
+    // //另一种写法
+    // a.onclick=function () {
+    //     alert("事件被出发了")
+    // }
+
+    //给输入框绑定事件
+    //获取焦点
+    //b.onfocus = method1;
+    //失去焦点
+    //b.onblur = method1;
+
+    //给图片绑定鼠标事件
+    //鼠标按下
+    //a.onmousedown = method1;
+    //鼠标松开
+    //a.onmouseup = method1;
+    //鼠标移动
+    //a.onmousemove = method1;
+
+
+    //变化图片
+    let i = 0;
+
+    function method2() {
+        i++;
+        if (i % 2 == 0) {
+            a.src = "imges/1.jpg";
+        } else {
+            a.src = "imges/3.jpg";
+        }
+    }
+    a.onclick = method2;
+</script>
+</body>
+</html>

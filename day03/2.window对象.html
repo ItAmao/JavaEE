@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        //与弹窗有关的方法
+        // alert(123);
+        // window.alert(123);
+        // let b = confirm(123);//有确定和取消按键, 其中按确定返回true 按取消返回false
+        // alert(b);
+        // let c = prompt("请输入你的密码:");
+        // alert(c);
+
+        //关闭和打开窗口
+        // close(); //秒关闭
+        // open();//打开一个新的窗口
+
+        // function method() {
+        //     alert(123);
+        // }
+
+        //与定时器相关的方法
+        //一次性定时器,在3秒之后,会自动调用method方法
+        //返回值是定时器的一个编号,编号在取消的时候可以使用
+        // let to = setTimeout(method, 3000);
+
+        //取消一次性定时器
+        // clearTimeout(to);
+
+        //多次循环定时器
+        //每3秒去调用method方法
+        // var iv = setInterval(method, 3000);
+
+        //取消循环定时器
+        // clearInterval(iv);
+        //------------------------------------------------------------------------------------------------------------------------
+
+        //与弹出框有关的方法:
+        //1.
+        //alert();  弹出一个提示框,包含一个确认按钮
+        //2.
+        // confirm() 弹出一个选择框,包含确认按钮和取消按钮
+        //如果点击确认方法返回true,如果点击取消方法返回false
+        // let c = confirm("你确定要删除吗?");
+        // alert(c);
+        //3.
+        // prompt() 弹出一个输入框,包含确认按钮和取消按钮
+        // 如果点击确认方法,返回输入的内容,如果点击取消方法,返回null
+        // let p = prompt("请输入你的密码");
+        // alert(p);
+
+        //onload是一个事件,等窗体都加载完了在执行js代码
+        // window.onload = function () {
+        //     //1.获取a1
+        //     let input = document.getElementById("a1");
+        //     //2.给按钮绑定事件
+        //     input.onclick = function () {
+        //         alert(123);
+        //     }
+        // }
+
+        function method() {
+            alert("你好呀");
+        }
+
+        //定时器方法
+        // setTimeout()	 一次性定时器
+        //在3秒之后去调用method这个方法
+        //返回值是定时器的编号,编号在取消的时候可以用
+        //let id = setTimeout(method,3000);
+        // clearTimeout()   取消一次性定时器
+        //clearTimeout(id);
+
+        window.onload = function () {
+            // setInterval()    多次循环定时器
+            //每3秒去调用一个方法
+            //返回值是定时器的编号,编号在取消的时候可以用
+            let id = setInterval(method, 3000);
+
+            // clearInterval()  取消多次循环定时器
+
+            //获取按钮
+            let input = document.getElementById("a1");
+            //给按钮绑定事件
+            input.onclick = function () {
+                clearInterval(id);
+            }
+        }
+
+    </script>
+</head>
+<body>
+<input type="button" value="取消" id="a1">
+</body>
+</html>

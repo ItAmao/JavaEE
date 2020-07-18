@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        window.onload = function () {
+            let a1 = document.getElementById("a1");
+            let a2 = document.getElementById("a2");
+            let a3 = document.getElementById("a3");
+
+            //上一页
+            a1.onclick = function () {
+                history.back();
+                //里面需要填一个数字,整数往前,负数往后
+                history.go()
+            }
+
+            //下一页
+            a2.onclick = function () {
+                history.forward();
+            }
+
+            //历史个数
+            a3.onclick = function () {
+                history.length;
+            }
+
+        }
+
+
+    </script>
+</head>
+<body>
+<input type="button" value="上一页" id="a1">
+<input type="button" value="下一页" id="a2">
+<input type="button" value="历史个数" id="a3">
+</body>
+</html>

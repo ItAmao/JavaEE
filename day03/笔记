@@ -1,0 +1,233 @@
+1.JSON数据
+    1.概述:JSON是一种轻量级的数据交换格式,易于人的阅读和编写,同时也易于机器的解析和生成.
+          JSON采用完全独立于语言的文本格式,而且很多语言都提供了对json的支持
+            轻量级指的是跟xml做比较
+            数据交换指的是客户端和服务器之间业务数据的传递格式
+
+    2.JSON在JavaScript中的使用
+        1.JSON的定义
+            JSON是由键值对组成,并且由花括号(大括号)包围,每个键由引号引起来,键和值之间使用冒号进行分隔,多组键值对之间进行逗号进行分隔
+
+        2.JSON通过6种数据类型来表示
+            1.字符串: 不能使用单引号
+            2.数字:
+            3.布尔
+            4.null
+            5.对象
+            6.数组
+
+        3.在Js中操作JSON
+            1.创建JSON对象
+                var json={"nam1":"value1","name2":"value2","name3":[1,"str",true]};
+                var json=[{"name1":"value1"},{"name2":"value2"}];
+
+            2.JSON对象转换为JSON字符串
+                JSON.stringify(JSON对象)
+
+            3.JSON字符串转换为JSON对象
+                JSON.parse(JSON字符串)
+
+    1.1JSON基础语法
+        JSON 语法规则
+            数据:{属性:值,属性:值}
+            键值:键值之间是冒号,属性值与属性值之间是逗号
+            对象:用{}表示
+            数组:用[]表示
+            键:键可以用引号(单引号或双引号)括起来,也可以不用
+            值:值的类型:数字number 字符串string 布尔值Boolean 数组array 对象Object null
+
+        JSON对象使用中常见的具体形式
+            1.对象类型
+                格式  {属性:值,属性:值}
+            2.对象中有数组
+                格式  {属性:[值1,值2,值3],属性:[值1,值2,值3]};
+
+        获取数据
+            1.json对象.键名
+            2.json对象["键名"];
+
+        遍历json对象:注意json对象只能使用for-in来遍历
+            for(let key in json){
+                alert(key+":"+json[key]);
+            }
+
+        JSON格式转换:
+            JSON对象与字符串转换的相关函数
+                JSON.stringify(object)  把对象转为字符串
+                JSON.parse(sting)   把字符串转为对象
+
+2.BOM
+    1.BOM简介:
+        Brower Object Model 浏览器对象模型,将浏览器各个部分封装成对象
+    2.BOM对象:
+        window:窗口对象
+            特点:在调用window方法的时候window对象可写可不写
+        navigator：浏览器对象
+        screen：显示器屏幕对象
+        history：历史记录对象
+        location地址栏对象
+    3.window窗口对象
+        特点：
+        	在调用window的方法和属性时，window对象可写可不写
+        方法：
+            1.与弹出框有关的方法：
+                alert()		弹出一个提示框,包含一个确认按钮
+                confirm()   弹出一个选择框,包含确认按钮和取消按钮,如果点击确认方法返回true,如果点击取消方法返回false
+                prompt()    弹出一个输入框,包含确认按钮和取消按钮,如果点击确认方法返回输入的内容,如果点击取消方法返回null
+            2.与打开关闭有关的方法
+                close() 关闭当前窗口
+                open()  打开一个新的窗口
+            3.与定时器有关的方式：
+                setTimeout()	 一次性定时器
+                clearTimeout()   取消一次性定时器
+                setInterval()    多次循环定时器
+                clearInterval()  取消多次循环定时器
+    4.属性：
+        1.获取其他BOM对象：
+            history、location、navigator、screen
+        2.获取DOM对象
+            document
+    5.location地址栏对象
+        1.方法:reload(): 重新加载(刷新页面)
+        2.属性:href:地址栏的地址  获取地址栏的地址:location.href
+                               修改地址栏的地址:location.href="xxx";
+    6.history历史对象
+        1.方法:
+            back():返回前一个历史页面
+            forward():进入下一个历史页面
+            go(数字n):浏览历史记录,正数是前进到第n个页面
+                                负数是后退到第n个页面
+        2.属性:
+            length  保存页面中的历史个数
+
+3.DOM
+    1.DOM简介:
+        Document Object Model 文档对象模型,将标记语言文档的各个组成部分封装成对象,可以使用这些对象对标记语言文档进行CRUD操作
+        W3C DOM 标准被分为 3 个不同的部分：
+        	1.核心 DOM - 针对任何结构化文档的标准模型
+        		Document	:整个文档
+        		Element	    :元素
+        		Attribute   :属性
+        		Text        :文本
+        		Comment     :注释
+        		Node        :节点，节点是其他类型的父类
+        	2.XML DOM
+        	3.HTML DOM
+    2.DOM获取元素
+        1.第一种:ES5获取方式
+                1.获取一个
+                        document.getElementById(id属性值)
+                2.获取多个
+                        document.getElementsByClassName(class属性值)
+                        document.getElementsByTagName(标签名)
+                        document.getElementsByName(name属性值)
+        2.第二种:ES6获取方式
+                3.获取一个( 如果匹配了多个就获取其中的第一个)
+                        document.querySelector(css选择器)
+                4.获取多个
+                        document.querySelectorAll(css选择器)
+    3.DOM操作内容
+        1.获取或者修改元素的纯文本内容
+        	语法：
+        		js对象.innerText; 	不管你写的是什么都当做是文本
+
+        2.获取或者修改元素的html内容
+        	语法：
+        		js对象.innerHTML;     可以给元素添加子元素标签
+
+        3.获取或者修改包含自身的html内容
+        	语法：
+        		js对象.outerHTML;     可以修改当前元素以及子元素
+    4.DOM操作属性
+        1.获取元素的属性值
+            语法:
+                js对象名.属性名 js对象.value获取文本框的value值(只要有value都能获取不只是文本框)
+                js对象.checked  获取单选框/多选框的状态 被选中是true,没选中是false
+                js对象.selected 获取下拉框的状态 被选中是true,没选中是false
+                js对象.src      获取图片的路径
+        2.给元素设置自定义属性
+                语法:
+                		js对象.setAttribute(属性名,属性值)
+                语法:
+                		js对象.getAttribute(属性名)
+        4. 移除元素的自定义属性
+        	语法:
+        		js对象.removeAttribute(属性名)
+    5.dom操作样式
+        1. 设置一个css样式
+            语法:
+            		js对象.style.样式名='样式值'
+        2.通过class设置样式
+            语法:
+            		js对象.className='class值'
+    6.dom操作元素
+        1.创建一个标签对象(了解)
+            语法：
+            		document.createElement(标签名称)
+        2.给父标签添加一个子标签(了解)
+            语法：
+            		父标签对象.appendChild(子标签对象)
+        3.属性：
+          	parentNode  :获取当前元素的父元素
+
+4.正则表达式:
+    1.创建方式
+    		1. let regex = new RegExp("正则表达式");
+    		2. let regex = /正则表达式/;
+
+    			如果是第一种创建方式，\要写成\\，在字符串中\是转移字符
+    			如果是第二种创建方式，直接是一个正则对象，\只需要写一个\
+    			^是正则的开始符号,$是正则的结束符,可写可不写。
+
+    2.验证方法
+    		正则对象.test(字符串)
+    			符合正则规则就返回true，否则false
+
+    		字符串对象.match(正则对象)
+    			返回字符串中符合正则规则的内容。
+    3. 在线正则表达式
+        	https://tool.oschina.net/regex/#
+
+    4.正则的语法
+    		和java是一样的
+    		\d   数字字符[0-9]
+    		\w   单词字符[a-zA-Z_0-9]
+    		.    任意字符
+    	    ?    零个或一个
+    		+    一个或多个
+    		*    任意次
+           {n,m} n到m次
+
+
+
+
+
+
+    4.DOM操作
+        1.内容操作
+            1.html: 获取/设置元素的标签体内容
+            2.text() 获取/设置元素的标签体纯文本内容
+            3.val() 获取/设置元素的value属性值
+
+        2.属性操作
+            1.通用的属性操作
+                1.attr():       获取/设置元素的属性
+                2.removeAttr(): 删除属性
+                3.prop():       获取/设置元素的属性
+                4.removeProp(): 删除属性
+
+                attr和prop的区别:
+                    1.如果操作的是元素的固有属性,则建议使用prop
+                    2.如果操作的是自定义的属性,则建议使用attr
+
+
+            2.对class属性操作
+                1.addClass():添加class属性值
+                2.removeClass():删除Class属性值
+                3.toggleClass():切换class属性
+
+
+
+
+
+

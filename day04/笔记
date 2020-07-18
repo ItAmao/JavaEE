@@ -1,0 +1,196 @@
+JQuery 基础:
+    1.概念:是一个快速,简洁的JavaScript框架.简化js的开发
+
+    2.jq和js对象的区别和转换
+        jq对象的本质是数组,jq和js的功能不能通用
+         1.JQ对象在操作时.更加方便
+                2.JQ对象和JS对象方法不通用
+                3.两者相互转换
+                    jq---->js: jq对象[索引] 或者 jq对象.get(索引)
+                    js---->jq: $(js对象)
+
+    3.选择器:
+        筛选具有相似特征的元素(标签)
+            1.基本的语法学习:
+                事件绑定:
+                入口函数:
+                样式:
+
+            2.分类
+                1.基本选择器
+                    标签选择器(元素选择器)
+                        语法: $("html标签名")   获取所有匹配标签名称的元素
+                    id选择器
+                        语法: $("#id的属性值") 获得与指定id属性值匹配的元素
+                    class选择器
+                        语法: $(".class的属性值") 获得与指定的class属性值匹配的元素
+                    并集选择器:
+                        语法: $("选择器1,选择器2") 获得多个选择器选中的所有元素
+                2.层级选择器
+                    1.后代选择器
+                        语法:$("A B") 选择A元素内部的所有B元素
+                    2.子选择器
+                        语法:$("A > B") 选择A元素内部的所有B子元素
+                3.属性选择器
+                    1.属性名称选择器
+                        语法:$("A[属性名]")  包含指定属性的选择器
+                    2.属性选择器
+                        语法:$("A[属性值='值']") 包含指定属性等于指定值的选择器
+                    3.复合属性选择器
+                        语法:$("A[属性名='值'][]...") 包含多个属性条件的选择器
+                4.过滤选择器
+                    1.首元素选择器
+                        语法:first 获得选择的元素中的第一个元素
+                    2.尾元素选择器
+                        语法:last 获得选择的元素中的最后一个元素
+                    3.非元素选择器
+                        语法:not(selecter) 不包括指定内容的元素
+                    4.偶数选择器
+                        语法:even 偶数,从0开始计数
+                    5.奇数选择器
+                        语法:odd  奇数,从0开始计数
+                    6.等于索引选择器
+                        语法:eq(index) 指定索引元素
+                    7.大于索引选择器
+                        语法:gt(index) 大于指定索引元素
+                    8.小于索引选择器
+                        语法:lt(index) 小于指定索引元素
+                    9.标题选择器
+                        语法:header 获得标签元素 ,固定写法
+
+                5.表单过滤选择器
+                    1.表单过滤选择器
+                        语法:enabled 获得可用元素
+                    2.不可用元素选择器
+                        语法:disabled 获得不可用元素
+                    3.选中选择器
+                        语法:checked 获得单选/复选框选中的元素
+                    4.选中选择器
+                        语法:selected 获得下拉选择框选中的元素
+        4.jq对象遍历
+            1. 使用js的遍历方式
+            		普通for循环
+            		for(初始化值;循环结束条件;步长)
+
+            2. 使用jq的遍历方式
+            		1. jq对象.each(函数)
+            			语法：
+            				jq对象.each(function(index,element){});
+            					index:就是元素在数组中的索引
+            					element：就是数组中的每一个元素对象【js对象】
+
+            					this：集合中的每一个元素对象【js对象】
+            		2. 函数返回值：
+            				false:  如果当前function返回为false，则结束循环[break]
+            				true: 如果当前function返回为true，则结束本次循环，继续下次循环[continue]
+5.Jquery的DOM操作
+        1.jq操作内容:
+            1.jq对象.text() :获取/设置元素的标签体纯文本内容,相当于js的innerText
+            2.jq对象.html() :获取/设置元素的标签体超文本内容,相当于js的innerHTML
+        2.jq操作属性
+            1.jq对象.val() : 获取/设置元素的value属性值
+                            不加参数是获取值
+                            $(".aaa").val(); 相当于js对象.value;
+                            加了参数是设置值
+                            $(".aaa").val("李四"); 相当于js对象.value="李四";
+            2.jq对象.attr(属性名,属性值) : 设置元素的属性
+              jq对象.attr(属性名)       : 获取属性值
+              jq对象.removeAttr(属性名) : 删除属性
+            3.jq对象.prop(属性名,属性值) : 获取/设置元素的属性
+              jq对象.prop(属性名)       : 获取属性值
+              jq对象.removeProp(属性名) : 删除属性
+
+            4.两者的区别
+                attr和prop都可以获取自定义对象的属性值，
+                区别是attr能获取标签元素自定义属性，
+                prop无法获取，返回undefined，它只能获取标签自带属性。
+                removeAttr标签上的属性都可以移除,自定义对象属性不能移除，
+                removeProp不可以移除标签自定义属性，可以移除自定义对象上的属性
+        3.jq操作样式
+            1. 直接修改jq对象样式属性(了解)
+            	语法：
+            		jq对象.css()
+            			css(样式名) 	   :获取
+            			css(样式名,样式值) :设置
+            2. 添加/删除jq对象样式
+            	语法：
+            		jq对象.addClass()
+            		jq对象.removeClass()
+            			这个删除方法只会删除class的值，不会删除class属性
+            3. 切换jq对象样式
+            	语法：
+            		jq对象.toggleClass()
+        4.jq操作元素
+            1.jq对象.prepend()  在父标签中将子标签放在第一个位置
+            2.jq对象.append()   在父标签中将子标签放在最后一个位置
+              		相当于innerHTML += "子元素";
+            3.jq对象.empty()    清空子元素
+              		相当于innerHTML = "";
+            4.jq对象.remove()   删除自己
+              		相当于outerHTML = "";
+        5.jq事件绑定
+            1.jq绑定事件和js绑定事件写法的区别：
+                js对象.on事件 = function(){}
+                jq对象.事件(function(){})
+            2.页面加载事件的区别：
+                js写法：
+                	window.onload = function(){}
+                jq写法：
+                	jq对入口函数做了专门的简化：
+                		$(function(){})
+            3.区别：
+              	js的写法在一个页面中只能写一个onload（如果写了多个后面的会覆盖前面的）
+              	jq的写法在一个页面中可以写多个入口函数
+6.ajax的写法
+    1.jq的ajax函数
+        1.语法    $.ajax({name:value,name:value})
+        2.参数
+            url:请求地址
+            type:请求方式
+            data:请求参数   {键:值,键:值}
+            success:请求成功时,执行回调函数
+            error:请求失败时,执行回调函数
+            dataType:预期服务返回的数据类型
+                    "text":表示字符串    "json":表示json格式
+        3.示例:
+            $.ajax({  (需要加冒号,参数与参数之间用逗号)
+                url:"/xxxx" : 请求地址
+                type:"get"/"post",  :请求方式
+                data:{username:user,password:pass}, :请求参数
+                success:function(data){
+                            alert("回调成功");
+                        },
+                error:function(data){
+                        alert("回调失败");
+                },
+                dataType:"text" //期望服务器传回的参数
+            });
+    2.jq的get函数
+        1.语法:$.get(url,[data],[success],[type]);
+        2.参数:
+            url:请求地址
+            data:请求参数
+            success:请求成功时的回调函数
+            type:期望返回的数据类型
+        3.例子:
+            $.get("/xxx",{username:user,password:pass},
+            function(data){
+                alert("回调成功");
+            },
+            type:"text"
+            );
+    3.jq的post函数
+        1.语法:$.post(url,[data],[success],[type]);
+        2.参数:
+            url:请求地址
+            data:请求参数
+            success:请求成功时的回调函数
+            type:期望返回数据类型
+        3.例子:
+            $.post("/xxx",{username:user,password:pass},
+            function(
+                alert("回调成功");
+            ),
+            type:"text"
+            );
+

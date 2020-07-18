@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="d1" class="div">
+    用户名：<input type="text" name="username" id="user" value="李四" aaa="123"> <br/>
+
+    性别：<input type="radio" name="sex" value="男">男
+    <input type="radio" name="sex" value="女">女 <br/>
+
+    爱好:<input type="checkbox" name="hobby" value="唱跳">唱跳
+    <input type="checkbox" name="hobby" value="rap">rap
+    <input type="checkbox" name="hobby" value="打篮球">打篮球 <br/>
+
+    居住地：
+    <select name="address" id="address">
+        <option value="没有">--请选择--</option>
+        <option value="北京">北京</option>
+        <option value="天津">天津</option>
+    </select><br/>
+
+    <input type="submit" value="提交" id="submit">
+</div>
+
+<script>
+    //获取文本框中对象的值,失去焦点时候获取
+    // let input = document.querySelector("#user");
+    // input.onblur = function () {
+    //     alert(input.value);
+    // }
+
+    //获取单选框的选中状态
+    // let submit = document.querySelector("#submit");
+    // submit.onclick = function () {
+    //     let arr = document.querySelectorAll("input[name='sex']");
+    //     for (let i = 0; i < arr.length; i++) {
+    //         alert(arr[i].value + ":" + arr[i].checked);
+    //     }
+    // }
+
+    //获取多选框选中的状态
+    // let submit = document.querySelector("#submit");
+    // submit.onclick = function () {
+    //     let arr = document.querySelectorAll("input[name='hobby']");
+    //     for (let i = 0; i < arr.length; i++) {
+    //         alert(arr[i].checked + ":" + arr[i].value);
+    //     }
+    // }
+
+    //获取下拉框被选中的选项
+    //onchange的内容,当元素发生改变时,触发事件
+    // let submit = document.querySelector("#address");
+    // submit.onchange = function () {
+    //     let arr = document.querySelectorAll("option");
+    //     for (let i = 0; i < arr.length; i++) {
+    //         if (arr[i].selected) {
+    //             alert(arr[i].value);
+    //         }
+    //     }
+    // }
+
+    //操作属性方法
+    //获取文本框
+    //设置
+    //1
+    // let input = document.querySelector("#user");
+    // input.setAttribute("value", "阿毛");
+    // alert(input.value);
+    //2
+    // let input = document.querySelector("#user");
+    // alert(input.value = "阿毛");
+
+    //获取
+    let input = document.querySelector("#user");
+    alert(input.getAttribute("aaa"));
+    alert(input.getAttribute("value"));
+</script>
+</body>
+</html>

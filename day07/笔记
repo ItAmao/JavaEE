@@ -1,0 +1,217 @@
+1.Request:
+    1.request对象和response对象的原理
+        1.tomcat服务器会根据请求url中的资源路径,创建对应的ServletDemo的对象
+        2.tomcat服务器会创建2个对象request和response对象
+            request对象中封装请求消息数据,
+        3.tomcat将request和response两个对象传递给service方法,并且调用service方法
+        4.程序员,可以通过request对象获取请求消息数据,通过response对象设置响应消息数据
+        5.服务器在给浏览器作出响应之前会从response对象中拿程序员设置的响应消息数据
+
+        原理:
+            1.request和response对象是由服务器创建的,我们来使用他们
+            2.request对象是来获取请求消息,response对象是来设置响应消息
+
+        http:超文本传输协议,通信协议,浏览器和服务器之间进行数据通信
+
+
+    2.request对象继承体系结构
+        ServletRequest--------接口
+             | 继承
+        HTTPServletRequest----接口
+             | 实现
+        org.apache.catalina.connector.RequestFacade 类(tomcat创建的)
+
+    3.request对象的功能  携带数据,通信数据
+        1.获取请求消息数据
+            1.获取请求行数据
+                GET / day/07/demo1?name=xxx  HTTP/1.1
+                方法:
+                    1.虚拟名称路径
+                    String contextPath=request.getContextPath();
+                    2.请求方式
+                    String method=request.getMethod();
+                    3.远程主机的ip地址(获得客户端的IP地址)
+                    String remoteAddr=request.getRemoteAddr();
+                ---------------------------------------------------------
+                    4.获得协议
+                    String scheme=request.getScheme();
+                    5.获取域名,使用localhost或者IP地址--->服务器名字
+                    String serverName=request.getServerName();
+                    6.获取端口号
+                    int serverPort=request.getServerPort();
+                    7.访问资源名称
+                    String servletPath=request.getServletPath();
+                    8.获取参数
+                    String queryString=request.getQueryString();
+                    9.获取路径
+                        1.统一资源定位符(绝对路径) StringBuffer requestURL=request.getRequestURL();
+                        2.统一资源描述符(相对路径) String requestURI=request.getRequestURI();
+
+            2.获取请求头数据
+                方法:
+                    1.获取头(根据键来获取值)
+                    String xxx= request.getHeader("xxx")
+                        User-Agent:window的特殊版本信息,浏览器的版本
+                        Referer:当前访问资源的上一个资源路径(防盗链)
+
+            3.请求参数 !important
+                方法:
+                    1.根据key获得一个值
+                    String parameter=request.getParameter("key");
+                    2.获得所有的键值对(无法确定值是几个,所有的都是数组)
+                    Map<String,String[]> map=request.getParameterMap();
+                    3.获得所有的key的名称
+                    Enumeration<String> key=request.getParameterNames();
+                    4.根据key获取一组值
+                    String[] values=getParameterValues("key");
+
+            4.其他
+                方法:
+                    域对象:一个有作用范围的对象,可以在范围内共享数据
+                    1.setAttribute(String name,Object obj);
+                    2.Object getAttribute(String name) 通过键获取值
+                    3.removeAttribute(String name) 通过键移出键值对
+
+                2.请求转发:一种在服务器内部的资源跳转方式
+                    1.步骤:
+                        1.通过request对象获取请求转发器对象:RequestDispatcher getRequestDispatcher(String path)
+                        2.使用RequestDispatcher对象来进行转发:forward( request, response);
+                    2.特点:
+                        1.浏览器地址栏路径没有不发生变化
+                        2.只能转发到当前服务器内部资源中,
+                        3.转发是一次请求
+
+            5.request域对象 和 ServletContext域对象的区别
+                1.request域对象和servletContext都可以存数据
+                2.servletContext:存储公共数据,生命周期:项目启动就有,项目停止就销毁,整个项目就一份(它是单例的)
+                3.request:生命周期,请求开始时创建,响应结束销毁(每个线程一个)
+
+2.Response对象: 功能:设置响应消息
+        1.设置响应行
+            1.格式:HTTP/1.1 200 ok
+            2.设置状态码
+                response.setStatus(状态码);
+                response.sendError(状态码,"描述信息");
+            3.状态码:
+                 1.1xx:服务器接收客户端消息,但没有接收完成,等待一段时间后发送1xx多状态码
+                 2.2xx:成功    代表:200
+                 3.3xx:重定向   302(重定向)    304(访问缓存)
+                 4.4xx:客户端错误     代表404(路径没有对应的资源)    405(请求方式没有对应的doXxx方法)
+                 5.5xx:服务器端错误    代表500(服务器内部出现异常)
+
+        2.设置响应头
+            1.setHeader(String name,String value)
+
+        3.设置响应体:
+            1.常见的响应头
+                1.location:
+                    重定向操作:通常告诉浏览器马上向该地址发送请求,通常和响应码302一起使用
+                2.refresh:
+                    定时刷新操作,指定时间后跳转到指定页面
+                3.content-encoding
+                    设置当前的数据的压缩格式,告诉浏览器以何种格式解压数据
+                4.content-disposition
+                    通知浏览器以何种方式获取数据(直接解析数据)
+                5.content-type
+                    实体头部用于指定资源的MIME类型,
+
+        4.重定向:资源跳转的方式
+                1.告诉浏览器重定向:设置状态码为302
+
+                2.告诉浏览器B资源的路径:响应头location:B资源的路径
+                重定向 :  一个资源 处理不了请求的时候 响应302 和 location 浏览器自动发起第二次请求
+                          //1.设置状态码为302
+                          //response.setStatus(302);
+                          ////2.设置响应头location
+                          //response.setHeader("location", "/day07/responseDemo2");
+                          //简单的重定向方法
+                          response.sendRedirect("/day07/responseDemo2");
+
+                面试经典问法:forward和redirect区别 !important
+                3.重定向的特点:   redirect
+                    1.地址栏发生变化
+                    2.重定向可以访问其他站点(服务器)的资源
+                    3.重定向是2次请求,不能使用request对象来共享数据
+                    4.不携带数据
+                4.转发的特点:    forward
+                    1.转发地址栏路径不变
+                    2.转发只能访问当前服务器下的资源
+                    3.转发是一次请求,可以使用request对象来共享数据
+                    4.携带数据
+
+                路径写法:
+                    1.路径的分类:
+                        1.相对路径:通过相对路径不可以确定唯一资源,不以/开头,以.开头路径 jsp不推荐相对路径
+                        2.绝对路径:通过绝对路径可以确定唯一资源 以/开头的路径称为绝对路径
+                        相对路径规则:确定访问当前资源和目标资源之间的相对位置关系
+                            ./:当前目录
+                            ../:后退一级目录
+
+                        绝对路径规则:判断定义的路径是给谁用的? 判断请求将来从哪儿发出
+                            给客户端浏览器使用:需要加虚拟目录(项目的访问路径)
+                                使用虚拟目录动态获取 request.getContextPath()
+                            给服务器使用:不需要加虚拟目录()
+
+        5.体:服务器响应给浏览器数据的源码
+            步骤:
+                1.字符流:输出文字信息
+                    PrintWriter writer = response.getWriter(); 字符流
+                    writer.write("<a href='xxxx'>百度</a>");
+                2.注意乱码的问题:
+                     response.setContentType("text/html;charset=utf-8");
+
+                1.字节流:输出文件 视频 音频 图片...
+                    方式一:(不能下载)
+                    1.特殊设置下载的头
+                    response.setHeader("content-disposition", "attachment;filename=xx.jpg");
+                    2.通过输入流去获取一张图片
+                    ServletOutputStream outputStream = response.getOutputStream();
+                    ServletOutputStream sos = response.getOutputStream();
+                    3.调用工具包进行流转换
+                    IOUtils.copy(is, sos);
+
+                    方式二:
+                    1.获得 浏览器的版本信息
+                    String agent = request.getHeader("user-agent");
+                    2.调用工具类将文件名称编码
+                    filename = DownLoadUtils.getName(agent , filename );
+                    3.方式一
+
+
+
+        7.验证码:
+                1.本质是图片
+                2.目的:防止恶意表单注册
+
+
+
+
+
+
+
+
+
+HTTP协议:
+    1.请求消息:客户端发给服务端的数据
+    2.响应消息:服务端发送给客户端的数据
+        1.响应行
+            响应行
+                1.组成:协议/版本  响应状态码 状态码描述
+                2.响应状态码:服务器去告诉客户端浏览器本次请求和响应的一个状态
+                    1.状态码都是3位数字
+                    2.分类:
+
+        2.响应头
+                1.格式:头名称:值
+                2.常见的响应头:
+                    1.Content-Type:服务器告诉客户端本次响应体数据格式以及编码格式
+                    2.Content-disposition:服务器告诉客户端以什么格式打开响应体数据
+                        值:
+                            in-line:默认值,在当前页面内打开
+                            attachment;filename=xxx,以附件形式打开响应体,文件下载
+        3.响应空行
+        4.响应体
+                真实传输的数据
+
+
+

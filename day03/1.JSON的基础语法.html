@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        //json对象
+        //let json = {name: "阿毛", age: 23};
+        //alert(json);
+
+        //对象的值有数组
+        //let json = {"name": "阿毛", "age": 23, "hobby": ["唱", "跳", "睡觉"]};
+        //console.log(json);
+
+        //数组中有对象
+        // let arr = [{name: "阿毛", age: 23}, {name: "阿毛1", age: 23}, {name: "阿毛2", age: 23}];
+        // alert(arr);
+
+        //也可以对象套对象,数组套数组
+
+
+        //获取数据
+        //1
+        // alert(json.name);
+        // alert(json.hobby[1]);
+        // //2
+        // alert(json["hobby"][1]);
+
+        //遍历获取数据
+        //for
+        //当被遍历的是一个json对象时,这个时候i就表示json中的key
+        // for (let i in json) {
+        //     alert(i + ":" + json[i]);
+        // }
+
+
+        //json和String转换
+        //alert(json);
+        //转成字符串
+        // let s = JSON.stringify(json);
+        // alert(s);
+        //
+        // let j = JSON.parse(s);
+        // alert(j);
+
+        //-----------------------------------------------------------------------------------------------------------------------
+
+        //json对象
+        // let json = {"name": "阿毛", "age": 23};
+
+        //json对象中有数组
+        let json = {"name": "阿毛", age: 28, 'hobby': ["唱", "跳", "rap"]};
+        // console.log(json);
+
+        //获取数据
+        //1.json对象.键名
+        // alert(json); //Object
+        // alert(json.name);//阿毛
+        // alert(json.age);//23
+        // alert(json.hobby[1]);//获取json对象中数组索引为1的元素
+
+        //2.json对象["键名"]
+        //alert(json["hobby"][1]);//获取json对象中数组索引为1的元素
+
+        //3.for循环遍历 json对象只能用for-in去遍历
+        // for...in 语句用于对数组或者对象的属性进行循环操作。
+        // for ... in 循环中的代码每执行一次，就会对数组的元素或者对象的属性进行一次操作。
+        // 总结来说:for in总是得到对像的key或数组,字符串的下标,而for of和forEach一样,是直接得到值
+        // 结果for of不能对象用
+        //其中的key为键 json[key] 为值
+        //注意： 不能使用 json.key 的方式, 因为 json.key 相当于 json."name" 多了双引号
+        // for (let key in json) {
+        //     alert(key + ":" + json[key]);
+        // }
+
+        //4.json和string的转换
+        // 把json对象转成字符串
+        let s = JSON.stringify(json);
+        alert(s);
+        //把字符串转成json对象
+        let parse = JSON.parse(s);
+        alert(parse);
+
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

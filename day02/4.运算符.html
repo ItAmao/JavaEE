@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        //一元运算符
+        //++
+        let a = 10;
+        let b = a++;   // 先把10赋值给b,然后a变成11
+        //alert(b);  //10
+        let c = ++b;  //先把b变成11,然后在赋值给c
+        //alert(c);  //11
+
+        //+
+        let d = +"10";
+        //alert(d+1);   //11
+
+
+        //算术运算符
+        //alert(10 / 3); // 3.333333333335
+
+
+        //赋值运算符
+        let e = 10;
+        let f = 20;
+        f += e;   //相当于  f = f + e;
+        //alert(f); //30
+
+        //alert("吴彦祖" + 6  + 6 + 6);  //吴彦祖666
+
+        //比较运算符
+        let q = 10;
+        let w = "10";
+        //alert(q == w);  //比较值是否等于
+        //alert(q === w);  //比较值和类型是否等于
+
+        let i = null;   //null
+        let j;          //undefined
+        //alert(i == j); //null和undefined的值相同
+        //alert(i === j); // null和undefined的类型不同
+
+
+        //逻辑运算符
+        //alert(e > 9 && q > 10); //false
+
+        //let bb = true;
+        //alert(!bb);   //false
+        //alert(!!bb);   // true
+
+        //let cc;
+        //alert(!!cc);
+
+        //while要的是一个boolean值，把字符串放在循环里就自动转成boolean
+        // let bb ;
+        // while(bb){
+        //     alert(bb);
+        // }
+
+        //三元运算符
+        let a2 = 10;
+        let b2 = 20;
+        let c2 = a2 > b2 ? a2 : b2;
+        alert(c2);
+    </script>
+</head>
+<body>
+
+</body>
+</html>

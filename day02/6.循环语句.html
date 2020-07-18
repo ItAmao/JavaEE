@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>循环</title>
+    <script>
+        //数组
+        let arr = [11,22,33,44,55];
+
+         /*
+            //普通for循环
+            for(let i=0; i<5; i++){
+                document.write(i+" ");
+            }
+
+            //给页面输出换行标签
+            document.write("<br/>");
+
+            for(let i=0; i<arr.length;i++){
+                document.write(arr[i] + " ")
+            }
+         */
+
+         //增强for循环
+        //for(数据类型 变量名 : 数组)
+        //  for(let a of arr){
+        //      document.write(a+" ");
+        //  }
+
+        //索引for循环
+        //i是数组的索引
+        // for(let i in arr){
+        //     document.write(arr[i] + " ");
+        // }
+
+        //while循环
+        // let a = 0;
+        // while(a < 5){
+        //     alert(a);
+        //     a++;
+        // }
+
+        //do..while循环
+        // let a = 0;
+        // do{
+        //     alert(a);
+        //     a++;
+        // }while(a < 5);
+
+
+        //循环控制语句
+        for(let i = 0 ; i < 10; i++){
+            //偶数被跳过
+            //if(i % 2 == 0){
+            //    continue;
+            //}
+            //i等于4就把循环结束
+            if(i == 4){
+                break;
+            }
+            alert(i);
+        }
+
+    </script>
+</head>
+<body>
+</body>
+</html>

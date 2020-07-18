@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/jquery-3.5.1.js"></script>
+</head>
+<body>
+<div id="div">你好,阿毛</div>
+用户名：<input type="text" name="username" class="aaa" value="张三"><br/>
+
+行业:
+<input type="checkbox" name="items" value="美容">美容
+<input type="checkbox" name="items" value="IT">IT
+<input type="checkbox" name="items" value="金融">金融
+<input type="checkbox" name="items" value="管理">管理
+
+<img src="imges/1.jpg" alt="">
+<script>
+    // //1.dom操作纯文本
+    // $("#div").text("<div>你好,你真瘦</div>");
+    //
+    // //2.dom操作超文本
+    // $("#div").html("<H1>你好,世界</H1>");
+    //
+    // //3.dom操作属性
+    // let val = $(".aaa").val();
+    //alert(val);
+
+    //prop: 用法 jq对象.prop(属性名,属性值) :获取/设置元素属性
+    //          jq对象.prop(属性名) :获取元素的值
+    //removeProp(属性名):删除属性
+    //$(".aaa").prop("value", "李四");
+    //alert($(".aaa").prop("value"));
+    //removeAttr标签上的属性都可以移除,自定义对象属性不能移除，
+    // removeProp不可以移除标签自定义属性，可以移除自定义对象上的属性
+    //$(".aaa").removeProp("value");
+    //$(".aaa").removeAttr("value");
+
+    //attr: 用法 jq对象.attr(属性名,属性值) :设置元素的值
+    //          jq对象.attr(属性名):获取属性值
+    //          jq对象.removeAttr(属性名):删除属性
+    //$(".aaa").attr("value", "李四");
+
+    //"value"为标签自定义属性
+    //$(".aaa").prop("value", "李四"); //不改变html的源代码
+    //$(".aaa").attr("value", "李四"); //改变了html的源代码
+
+    // alert($(".aaa").prop("value"));
+    // alert($(".aaa").attr("value"));
+
+    //$(".aaa").removeProp("value"); //remove不能删除标签自定义属性
+    //$(".aaa").removeAttr("value"); //可以删除标签自定义属性
+
+    //结论:
+    //attr和prop都可以获取自定义对象的属性值，
+    // 区别是attr能获取标签元素自定义属性，
+    // prop无法获取，返回undefined，它只能获取标签自带属性。
+    //removeAttr标签上的属性都可以移除,自定义对象属性不能移除，
+    // removeProp不可以移除标签自定义属性，可以移除自定义对象上的属性
+
+
+</script>
+</body>
+</html>

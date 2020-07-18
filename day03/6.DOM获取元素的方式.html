@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        window.onload = function () {
+            //ES5
+            // //获取一个
+            // document.getElementById("a1");
+            //
+            // //获取多个
+            // let ebcn = document.getElementsByClassName("c");
+            // for (let i = 0; i < ebcn.length; i++) {
+            //     alert(ebcn[i]);
+            // }
+            //
+            // let ebtb = document.getElementsByTagName("input");
+            // for (let i = 0; i < ebtb.length; i++) {
+            //     alert(ebtb[i]);
+            // }
+            //
+            // let ebn = document.getElementsByName("aaa");
+            // for (let i = 0; i < ebn.length; i++) {
+            //     alert(ebn[i]);
+            // }
+
+            //ES6
+            //3.获取一个
+            //获取id为a1的元素
+            //如果为多个匹配,获取第一个
+            // let element1 = document.querySelector("#a1");
+            // let element2 = document.querySelector(".c");
+            // alert(a.value);
+            // //获取多个
+            // var enlo = document.querySelectorAll(".c");
+            // for (let i = 0; i < enlo.length; i++) {
+            //     alert(enlo[i].value);
+            // }
+            //------------------------------------------------------------------------------------
+
+            // ES5
+            //1.获取一个
+            //document.getElementById(id属性值)
+            // let a1 = document.getElementById("a1");
+            // alert(a1);
+
+            //2.获取多个
+            //document.getElementsByClassName(class属性值)
+            //获取class='c'的元素
+            // let a2 = document.getElementsByClassName("c");
+            // alert(a2);
+            //document.getElementsByTagName(标签名)
+            //let arr = document.getElementsByTagName("input");
+            //document.getElementsByName(name属性值)
+            //获取name='aaa'的元素
+            //let arr = document.getElementsByName("aaa");
+
+            //3.获取一个
+            //document.querySelector(css选择器)
+            //#代表id,获取id='a1'的元素
+            //let a = document.querySelector("#a1");
+            //代表class='c'的元素
+            //如果有多个匹配获取第一个
+            //let a = document.querySelector(".c");
+            //alert(a.value);
+
+            //4.获取多个
+            //document.querySelectorAll(css选择器)
+            // 代表class='c'的元素
+            //let arr = document.querySelectorAll(".c");
+
+            // name='aaa'
+            let arr = document.querySelectorAll("input[name='aaa']");
+
+            for (let i = 0; i < arr.length; i++) {
+                alert(arr[i].value);//获取name='aaa'中.value的值
+            }
+
+        }
+
+
+    </script>
+</head>
+<body>
+<input type="button" value="按钮1" id="a1" class="c">
+<input type="button" value="按钮2" id="a2" class="c" name="aaa">
+<input type="button" value="按钮3" id="a3" class="c" name="aaa">
+</body>
+</html>

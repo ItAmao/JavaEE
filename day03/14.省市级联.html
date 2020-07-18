@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        .regist_bg {
+            width: 100%;
+            height: 600px;
+            padding-top: 40px;
+            background-image: url(imges/bg.jpg);
+        }
+
+        .regist {
+            border: 7px inset #ccc;
+            width: 600px;
+            padding: 40px 0;
+            padding-left: 80px;
+            background-color: #fff;
+            margin-left: 25%;
+            border-radius: 10px;
+        }
+
+        input[type="submit"] {
+            background-color: aliceblue;
+            width: 100px;
+            height: 35px;
+            color: red;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="regist_bg">
+    <div class="regist">
+        <form action="#">
+            <table width="600" height="350px">
+                <tr>
+                    <td colspan="3">
+                        <font color="#3164af">会员注册</font> USER REGISTER
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">用户名</td>
+                    <td colspan="2"><input id="loginnameId" type="text" name="loginname" size="60"/></td>
+                </tr>
+                <tr>
+                    <td align="right">密码</td>
+                    <td colspan="2"><input id="loginpwdId" type="password" name="loginpwd" size="60"/></td>
+                </tr>
+                <tr>
+                    <td align="right">确认密码</td>
+                    <td colspan="2"><input id="reloginpwdId" type="password" name="reloginpwd" size="60"/></td>
+                </tr>
+                <tr>
+                    <td align="right">Email</td>
+                    <td colspan="2"><input id="emailId" type="text" name="email" size="60"/></td>
+                </tr>
+                <tr>
+                    <td align="right">姓名</td>
+                    <td colspan="2"><input name="text" name="username" size="60"/></td>
+                </tr>
+                <tr>
+                    <td align="right">性别</td>
+                    <td colspan="2">
+                        <input type="radio" name="gender" value="男" checked="checked"/>男
+                        <input type="radio" name="gender" value="女"/>女
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">电话号码</td>
+                    <td colspan="2"><input type="text" name="phone" size="60"/></td>
+                </tr>
+                <tr>
+                    <td align="right">所在地</td>
+                    <td colspan="3">
+                        <select id="provinceId" style="width:150px">
+                            <option value="">----请-选-择-省----</option>
+                        </select>
+                        <select id="cityId" style="width:150px">
+                            <option value="">----请-选-择-市----</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="80" align="right">验证码</td>
+                    <td width="100"><input type="text" name="verifyCode"/></td>
+                    <td><img src="imges/checkMa.png"/></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="2">
+                        <input type="submit" value="注册"/>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+<!--
+省市级联
+	1. 页面加载完成后自动装载省数据
+	2. 当选中省时,装载该省的市数据
+-->
+<script>
+    // //1.准备json数据
+    // let json = {山西省: ["太原市", "大同市", "阳泉市"], 河北省: ["石家庄市", "保定市", "唐山市"], 江苏省: ["南京市", "苏州市", "宿迁市"]};
+    //
+    // //2.获取select所有元素
+    // let province = document.querySelector("#provinceId");
+    //
+    // //3,遍历
+    // for (let key in json) {
+    //     //province.innerHTML += "<option value='" + key +"'>" + key + "</option>"
+    //     province.innerHTML += "<option value='" + key + "'>" + key + "</option>"
+    // }
+    // //4,添加市,给省绑定一个onchange事件
+    // province.onchange = function () {
+    //     //所有在事件触发的时候,把原来的市区内容给删除掉
+    //     let cityId = document.querySelector("#cityId");
+    //     cityId.innerHTML = "<option value=''>----请-选-择-市----</option>";
+
+        //方式一:
+        // let arr = document.querySelectorAll("#provinceId option");
+        // //let arr = document.querySelectorAll("#provinceId");
+        // for (let i = 0; i < arr.length; i++) {
+        //     if (arr[i].selected) {
+        //         //相当于选中了省份
+        //         //然后把市一个个添加进去
+        //         //获取根据对应的省份获取市的数组
+        //         let shiqu = json[arr[i].value];
+        //         for (let key of shiqu) {
+        //             //需要进行拼接操作,但是会出现不同的省份的市拼接在一起
+        //             cityId.innerHTML += "<option value='" + key + "'>" + key + "</option>";
+        //         }
+        //     }
+        // }
+
+        //方式二:
+        // let shiarr = json[this.value];
+        // for (let key of shiarr) {
+        //     cityId.innerHTML += "<option value='" + key + "'>" + key + "</option>";
+        // }
+
+    let json = {山西省: ["太原市", "大同市", "阳泉市"], 河北省: ["石家庄市", "保定市", "唐山市"], 江苏省: ["南京市", "苏州市", "宿迁市"]};
+        //获取省标签
+        let province = document.querySelector("#provinceId");
+
+        for(let key in json) {
+            province.innerHTML += "<option value='"+key+"'>" + key + "</option>";
+        }
+        //给省标签绑定onchange事件
+        province.onchange = function () {
+            let cityId = document.querySelector("#cityId");
+            cityId.innerHTML="<option value=''>----请-选-择-市----</option>";
+            //选择所有省下的option
+            let arr = document.querySelectorAll("#provinceId option");
+            //遍历json对象中的value值加入到 cityId 中
+            for (let i = 0; i < arr.length ; i++){
+                //哪个省市被选定了
+                if(arr[i].selected){
+                    //就从哪个数组中取出对应的城市
+                    let shiqu = json[arr[i].value];
+                    for (let key of shiqu) {
+                        cityId.innerHTML+= "<option value='" + key + "'>" + key + "</option>";
+                    }
+                }
+            }
+
+
+        }
+
+
+</script>
+</body>
+</html>

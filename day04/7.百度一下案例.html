@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html>
+<head>
+    <title>title</title>
+
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <script src="js/jquery-3.5.1.js"></script>
+
+    <style type="text/css">
+
+        .baiduclass {
+            background: red;
+            cursor: pointer;
+        }
+
+        /*输入框的样式*/
+        #keywords {
+            width: 500px;
+            font-size: 28px;
+        }
+
+        /*搜索按钮的样式*/
+        #searchbutton {
+            font-size: 28px;
+        }
+
+        /*框框*/
+        .message_area {
+            width: 502px;
+            border: 1px solid #999999;
+            margin-left: -133px;
+            margin-top: -1px;
+            display: none;
+        }
+
+        /*去除li的点*/
+        .message_area li {
+            list-style: none;
+            padding: 5px;
+        }
+
+        li:hover {
+            background-color: red;
+        }
+
+        .current {
+            background-color: red;
+        }
+
+    </style>
+</head>
+
+<body>
+<div align="center">
+    <input type="text" id="keywords">
+    <input type="button" id="searchbutton" value="百度一下">
+    <div class="message_area" align="left">
+        <li>郑州</li>
+        <li>许昌</li>
+        <li>洛阳</li>
+        <li>周口</li>
+        <li>新乡</li>
+        <li>南阳</li>
+        <li>日本</li>
+        <li>大阪</li>
+        <li>东京</li>
+    </div>
+</div>
+<script>
+    $(function () {
+        var a = 0;
+        //键盘监听事件
+        $("#keywords").keyup(function () {
+            let keywords = $("#keywords").val();
+            if (keywords != "" && a == 0) {
+                $(".message_area").slideDown();
+            } else {
+                $(".message_area").slideUp();
+                a = 0;
+            }
+        })
+
+        //鼠标添加内容事件
+        $("li").click(function () {
+            let text = $(this).text();
+            $("input[type='text']").val(text);
+        })
+
+        //失去input
+        $("#keywords").blur(function () {
+            $(".message_area").slideUp();
+        })
+
+        //键盘上下键加回车键
+        //获取所有的li
+        let list = $("li");
+        let index = -1;
+        let lilength = list.length - 1;
+
+        function addIndex() {
+            index = index > lilength ? 0 : ++index;
+            return index;
+        }
+
+        function reduceIndex() {
+            index = index < 0 ? lilength : --index;
+            return index;
+        }
+
+        function setLiColorByClass() {
+            for (let i = 0, len = list.length; i < len; i++) {
+                list[i].className = i == index ? "current" : "";
+            }
+        }
+
+        $("#keywords").keydown(function (key) {
+            switch (key.keyCode) {
+                case 13:
+                    let t = $("li").html();
+                    $("input[type='text']").val(t);
+                    $(".message_area").slideUp();
+                    a = 1;
+                    break;
+                case 38:
+                    reduceIndex();
+                    setLiColorByClass();
+                    break;
+                case 40:
+                    addIndex();
+                    setLiColorByClass();
+                    break;
+            }
+        })
+    });
+
+
+</script>
+</body>
+</html>

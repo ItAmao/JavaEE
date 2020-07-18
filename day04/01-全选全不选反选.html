@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/jquery-3.5.1.js"></script>
+</head>
+<body>
+<input type="checkbox" id="a1" class="aaa">
+<input type="checkbox" id="a2" class="aaa">
+<input type="checkbox" id="a3" class="aaa">
+</br>
+<input type="button" value="全选" id="i1">
+<input type="button" value="全不选" id="i2">
+<input type="button" value="反选" id="i3">
+
+<script>
+    $("#i1").click(function () {
+        let $aaa = $(".aaa");
+        $aaa.each(function () {
+            this.checked = true;
+        })
+    });
+    $("#i2").click(function () {
+        let $aaa = $(".aaa");
+        $aaa.each(function () {
+            this.checked = false;
+        })
+    });
+    $("#i3").click(function () {
+        let $aaa = $(".aaa");
+        $aaa.each(function () {
+            this.checked = !this.checked;
+        })
+    });
+
+
+</script>
+</body>
+</html>

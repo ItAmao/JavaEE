@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/jquery-3.5.1.js"></script>
+</head>
+<body>
+用户名:<input type="text" name="username" class="aaa">
+密码:<input type="password" name="password" class="aaa">
+<input type="button" value="按钮">
+
+<script>
+    //当按钮点击时,获取两个文本框的内容
+    //1.给button绑定单击事件
+    $("input[type='button']").click(function () {
+        //     //2.遍历input文本框
+        //     for (let i = 0; i < $(".aaa").length; i++) {
+        //         //alert($(".aaa")[i].val()); 因为添加了[i]之后已经转成了js
+        //         alert($(".aaa")[i].value);
+        //     }
+        //jq中的遍历
+
+        //ps jq中遍历不是forEach而是each
+        // $(".aaa").each(function () {
+        //     //其中遍历function有2个参数 index(索引) element(元素)
+        //     //如果不在function中写参数,可以用this,this表示这个元素
+        //     alert(this.value);
+        // })
+
+        //each遍历方法是有返回值的
+        //返回false相当于break 终止循环
+        //返回true相当于continue,返回循环体
+        // $(".aaa").each(function (index,element) {
+        //     if(index == 0){
+        //         // return false;  //break
+        //         return true;      //continue
+        //     }
+        //     alert(element.value);
+        // })
+
+    });
+
+
+</script>
+</body>
+</html>

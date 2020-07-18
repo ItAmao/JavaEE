@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>黑马旅游网注册</title>
+    <!-- 引入css样式文件 -->
+    <script src="lib/jquery-3.5.1.js"></script>
+    <script src="js/register.js"></script>
+    <link rel="stylesheet" href="css/register.css">
+</head>
+<body>
+<div class="container">
+    <div>
+        <img src="imges/top_banner.jpg" width="100%">
+    </div>
+    <div>
+        <img src="imges/logo.png" width="100%">
+    </div>
+    <div class="nav">
+        <ul>
+            <li>首页</li>
+            <li>周边游</li>
+            <li>日本游</li>
+            <li>欧美游</li>
+            <li>首页</li>
+            <li>首页</li>
+            <li>首页</li>
+            <li>首页</li>
+            <li>首页</li>
+        </ul>
+    </div>
+
+    <!--注册布局-->
+    <div class="content">
+        <div class="rg_form">
+            <!--左-->
+            <div class="rg_form_left">
+                <font size="4" color="orange">用户注册</font>
+                <br/><br/>
+                <font size="4" color="#a9a9a9">USER REGISTER</font>
+            </div>
+            <!--中-->
+            <div class="rg_form_center">
+                <!--表格-->
+                <table>
+                    <form action="/day07_2/registerServlet" method="get">
+                        <tr>
+                            <td class="td_left">用户名</td>
+                            <td class="td_right">
+                                <input type="text" name="username" id="userName" placeholder="请输入用户名">
+                                <span id="span1"></span>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td class="td_left">手机号</td>
+                            <td class="td_right">
+                                <input type="text" id="userPhone" name="phone" placeholder="请输入手机号">
+                                <span id="span2"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_left">密码</td>
+                            <td class="td_right">
+                                <input type="password" id="userPass" name="password" placeholder="请输入密码">
+                                <span id="span3"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_left">验证码</td>
+                            <td class="td_right">
+                                <input type="text" name="yzm" placeholder="请输入验证码">
+                                <img id="checkCode" class="checkCode" src="/day07_2/checkCodeServlet" alt="">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" align="center">
+                                <input type="submit" value="注册">
+                            </td>
+                        </tr>
+
+                    </form>
+                </table>
+            </div>
+            <!--右-->
+            <div class="rg_form_right">
+                已有账号？<a href="#" style="color: deeppink; text-decoration: none">立即登录</a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer">
+        <img src="imges/footer_service.png" width="100%">
+    </div>
+    <div class="copyright">
+        江苏传智播客教育科技股份有限公司
+        版权所有Copyright&copy;2006-2018, All Rights Reserved 苏ICP备16007882
+    </div>
+</div>
+</body>
+</html>

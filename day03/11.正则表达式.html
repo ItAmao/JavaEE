@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+用户名:<input type="text" name="username" id="user"><span id="span"></span>
+<script>
+    //获取input元素
+    let input = document.querySelector("#user");
+
+    //绑定失去焦点事件
+    input.onblur = function () {
+        //获取value
+        let s = input.value;
+        //alert(s);
+
+        //创建正则表达式
+        // let regex = new RegExp("\\w{6}");
+        //创建正则表达式
+        let regex = /\w{6}/;
+        //let regex = /^\w{6}$/;
+        //获取span
+        let span = document.querySelector("#span");
+
+        //如果正则不匹配
+        if (!regex.test(s)) {
+            span.innerHTML = "错误";
+        } else {
+            span.innerHTML = "";
+        }
+
+
+    }
+
+</script>
+
+
+</body>
+</html>

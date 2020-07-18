@@ -1,0 +1,180 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html>
+<head>
+    <title>title</title>
+
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <script src="js/jquery-3.5.1.js"></script>
+    <script>
+
+        //入口函数
+        $(function () {
+
+
+            //添加键盘事件  每次操作键盘之后获取输入框的value值
+            $("#keywords").keyup(function () {
+                var value = $("#keywords").val();
+                //判断如果输入框里面不为空
+                //让下面的框框显示
+                if(value != "" ){
+                    //用动画效果显示那个框框
+                    $(".message_area").slideDown();
+                }else{
+                    $(".message_area").slideUp();
+                }
+            })
+
+
+            //添加鼠标事件 监听哪个li被鼠标滑入
+            $("li").mouseover(function () {
+                //先让所有的红色都取消
+                $("li").removeClass("baiduclass");
+                //添加背景色
+                $(this).addClass("baiduclass");
+
+                //当点击了字儿之后 把字儿显示在hidden框中
+                var text = $(this).text();
+                $("input[type='hidden']").val(text);
+
+            })
+
+            //添加鼠标移走事件
+            $("li").mouseout(function () {
+                //删除背景色
+                $(this).removeClass("baiduclass");
+            })
+
+
+            //input失去焦点
+            $("#keywords").blur(function () {
+                //让框框收回去
+                $(".message_area").slideUp();
+
+                //获取影藏的value值 放到input中
+                var value = $("input[type='hidden']").val();
+                $(this).val(value);
+            });
+
+            //把input里面的值放到隐藏的value中
+            $(".message_area").mouseout(function () {
+                var value = $("#keywords").val();
+                $("input[type='hidden']").val(value);
+            })
+
+            //监听键盘按下
+            $("#keywords").keydown(function (key) {
+                //key.keycode就是按的那个键对应的数值
+                //上键是38
+                if(key.keyCode == 38){
+                    //让第一个li选中
+                    if($(".baiduclass").length == 0){
+                        $("li:last").addClass("baiduclass");
+
+                        //当点击了字儿之后 把字儿显示在hidden框中
+                        var text = $("li:last").text();
+                        $("input[type='hidden']").val(text);
+                    }else{
+                        //获取当前选中的li
+                        var li = $(".baiduclass");
+                        li.prev().addClass("baiduclass");
+                        li.removeClass();
+
+                        //当点击了字儿之后 把字儿显示在hidden框中
+                        var text = li.prev().text();
+                        $("input[type='hidden']").val(text);
+                    }
+                }
+                //下键是40
+                if(key.keyCode == 40){
+                    //让第一个li选中
+                    if($(".baiduclass").length == 0){
+                        $("li:first").addClass("baiduclass");
+
+                        var text = $("li:first").text();
+                        $("input[type='hidden']").val(text);
+                    }else{
+                        //获取当前选中的li
+                        var li = $(".baiduclass");
+                        li.next().addClass("baiduclass");
+                        li.removeClass();
+
+                        var text = li.next().text();
+                        $("input[type='hidden']").val(text);
+                    }
+                }
+
+                //回车是13
+                if(key.keyCode == 13){
+
+                    //获取影藏的value值 放到input中
+                    var value = $("input[type='hidden']").val();
+                    $(this).val(value);
+
+                    //让input框失焦
+                    $("#keywords").blur();
+                }
+            })
+
+
+        })
+
+    </script>
+
+
+    <style type="text/css">
+
+        .baiduclass{
+            background:red;
+            cursor:pointer;
+        }
+        /*输入框的样式*/
+        #keywords{
+            width:500px;
+            font-size:28px;
+        }
+        /*搜索按钮的样式*/
+        #searchbutton{
+            font-size:28px;
+
+        }
+        /*框框*/
+        .message_area{
+            width:502px;
+            border:1px solid #999999;
+            margin-left:-133px;
+            margin-top:-1px;
+            display: none;
+
+        }
+        /*去除li的点*/
+        .message_area li{
+            list-style:none;
+            padding:5px;
+
+        }
+
+    </style>
+</head>
+
+<body>
+<input type="hidden" >
+<div align="center">
+    <input type="text" id="keywords">
+    <input type="button" id="searchbutton" value="百度一下">
+    <div class="message_area" align="left">
+        <li>郑州</li>
+        <li>许昌</li>
+        <li>洛阳</li>
+        <li>周口</li>
+        <li>新乡</li>
+        <li>南阳</li>
+        <li>日本</li>
+        <li>大阪</li>
+        <li>东京</li>
+
+    </div>
+</div>
+</body>
+</html>

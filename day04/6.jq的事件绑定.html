@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/jquery-3.5.1.js"></script>
+</head>
+<body>
+<script>
+    //入口函数
+    $(function () {
+        // 当按钮被点击之后获取两个文本框的内容
+        //获取按钮绑定事件
+        $("input[type='button']").click(function () {
+            //获取文本框的值
+            $(".aaa").each(function () {
+                alert(this.value);
+            })
+        });
+    })
+
+
+    //jq入口函数可以写多个
+    // $(function () {
+    //     alert(123);
+    // })
+    //
+    // $(function () {
+    //     alert(456);
+    // })
+
+    //后面的会覆盖前面的
+    // window.onload = function () {
+    //     alert(123);
+    // }
+    //
+    // window.onload = function () {
+    //     alert(456);
+    // }
+
+
+
+
+
+</script>
+
+</body>
+</html>

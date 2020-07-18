@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        .regist_bg {
+            width: 100%;
+            height: 600px;
+            padding-top: 40px;
+            background-image: url(imges/bg.jpg);
+        }
+
+        .regist {
+            border: 7px inset #ccc;
+            width: 700px;
+            padding: 40px 0;
+            padding-left: 80px;
+            background-color: #fff;
+            margin-left: 25%;
+            border-radius: 10px;
+        }
+
+        input[type="submit"] {
+            background-color: aliceblue;
+            width: 100px;
+            height: 35px;
+            color: red;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .warn {
+            color: red;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+<div class="regist_bg">
+    <div class="regist">
+        <form action="http://www.baidu.com" id="myForm">
+            <table width="700px" height="350px">
+                <tr>
+                    <td colspan="3">
+                        <font color="#3164af">会员注册</font> USER REGISTER
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">用户名</td>
+                    <td colspan="2"><input id="loginnameId" type="text" name="loginname" size="50"/><span
+                            id="loginnamewarn" class="warn"><!--用户名不能为空--></span></td>
+                </tr>
+                <tr>
+                    <td align="right">密码</td>
+                    <td colspan="2"><input id="pwd1" type="password" name="pwd1" size="50"/></td>
+                </tr>
+                <tr>
+                    <td align="right">确认密码</td>
+                    <td colspan="2"><input id="pwd2" type="password" name="pwd2" size="50"/>
+                        <span id="pwdwarn" class="warn"><!--密码不一致--></span></td>
+                </tr>
+                <tr>
+                    <td align="right">Email</td>
+                    <td colspan="2"><input id="email" type="text" name="email" size="50"/> <span id="emailwarn"
+                                                                                                 class="warn"><!--邮箱格式有误--></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">姓名</td>
+                    <td colspan="2"><input name="text" name="username" size="50"/></td>
+                </tr>
+                <tr>
+                    <td align="right">性别</td>
+                    <td colspan="2">
+                        <input type="radio" name="gender" value="男" checked="checked"/>男
+                        <input type="radio" name="gender" value="女"/>女
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">电话号码</td>
+                    <td colspan="2"><input id="phone" type="text" name="phone" size="50"/> <span id="phonewarn"
+                                                                                                 class="warn"><!--手机格式有误--></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">所在地</td>
+                    <td colspan="3">
+                        <select id="provinceId" onchange="selectCity(this.value)" style="width:150px">
+                            <option value="">----请-选-择-省----</option>
+                            <option value="0">北京</option>
+                            <option value="1">辽宁</option>
+                            <option value="2">江苏</option>
+                        </select>
+                        <select id="cityId" style="width:150px">
+                            <option>----请-选-择-市----</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="80" align="right">验证码</td>
+                    <td width="100"><input type="text" name="verifyCode"/></td>
+                    <td><img src="imges/checkMa.png"/></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="2">
+                        <input id="rebtn" type="submit" value="注册"/>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+<!--
+  表单校验
+      1. 两次密码输入一致
+      2. 邮箱格式正确
+      3. 手机号格式正确
+      4. 提交表单时校验表单项是否合法.
+  总结:
+      form表单的 onsubmit 事件 表单提交之前触发
+  -->
+<script>
+    //1.两次密码输入一致
+    //获取两个密码
+    let pwd1 = document.querySelector("#pwd1");
+    let pwd2 = document.querySelector("#pwd2");
+    //获取span标签
+    let pwdwarn = document.querySelector("#pwdwarn");
+
+    //定义方法
+    function pwdtest() {
+        //判断密码和确认密码是否一致
+        if (pwd1.value != pwd2.value) {
+            //给提示
+            pwdwarn.innerHTML = "密码不一致";
+            return false;
+        } else {
+            pwdwarn.innerHTML = "";
+            return true;
+        }
+    }
+
+    //在确认密码失去焦点执行
+    pwd2.onblur = pwdtest;
+
+    //邮箱验证
+    //获取邮箱的值
+    let email = document.querySelector("#email");
+    let emailwarn = document.querySelector("#emailwarn");
+
+    function emailtest() {
+        //正则匹配邮箱
+        let regex = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
+        //获取文本框的内容
+        if (!regex.test(email.value)) {
+            emailwarn.innerHTML = "邮箱格式不正确";
+            return false;
+        } else {
+            emailwarn.innerHTML = "";
+            return true;
+        }
+    }
+
+    email.onblur = emailtest;
+
+    //手机号验证
+    let phone = document.querySelector("#phone");
+    //获取span
+    let phonewarn = document.querySelector("#phonewarn");
+
+    function phonetest() {
+        //1.手机号码正则
+        let regex = /^1[356789]\d{9}$/;
+        if (regex.test(phone.value)) {
+            phonewarn.innerHTML = "";
+            return true;
+        } else {
+            phonewarn.innerHTML = "手机号码格式错误";
+        }
+    }
+
+    phone.onblur = phonetest;
+
+    //判断
+    //在用户点击提交按钮之后 如果数据格式错误不能提交---------------------------------
+    //提交事件onsubmit在表单被提交的时候会触发，这个事件要绑定到form标签上
+    //onsubmit事件会接受方法的返回值,如果返回true代表允许提交,如果返回的是false代表阻止提交
+    //获取form表单
+    let form = document.querySelector("#myForm");
+    form.onsubmit = function () {
+        //调用每个方法
+        return pwdtest() && phonetest();
+    }
+
+</script>
+</body>
+</html>

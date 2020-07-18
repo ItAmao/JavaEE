@@ -1,0 +1,174 @@
+Servlet:
+    1.概念:运行服务器端的小程序
+    2.servlet就是一个接口,定义了java类被浏览器访问到tomcat识别的规则
+        public class ServletDemo01 implements Servlet
+    3.将来我们自定义一个类,实现servlet接口,复写方法
+    4.配置servlet
+        必须在web.xml中配置servlet
+
+        <!--    配置servlet-->
+            <servlet>
+                <servlet-name>demo01</servlet-name>
+                <servlet-class>com.amao.web.servlet.ServletDemo1</servlet-class>
+            </servlet>
+        <!--        1.tomcat将全类名对应的字节码文件加载进内存
+                    2.创建对象,cls.newInstance();
+                    3.调用方法-service
+        -->
+            <servlet-mapping>
+                <servlet-name>demo01</servlet-name>
+                <url-pattern>/demo1</url-pattern>
+            </servlet-mapping>
+    5.servlet原理:
+            1.当服务器接收到客户端浏览器的请求后,会解析请求URL路径,获取访问Servlet的资源路径
+            2.查找web.xml文件,是否有对应的标签<url-pattern>标签体内容.
+            3.如果有,则在找到对应的<servlet-class>全类名
+            4.tomcat会将字节码文件加载进内存,并且创建其对象
+            5.调用其方法
+    6.servlet中的生命周期: (Servlet是一个单例的对象) 懒汉模式
+            1.被创建   执行init方法,并只执行一次
+                    指定servlet的创建时机
+                              <!--
+                              指定servlet的创建时机
+                              1.第一次被访问时,创建
+                              <load-on-startup>的值为负数,
+                              2.服务器启动时,创建,从小到大优先级逐渐降低
+                              优先级体现在同一个tomcat启动2个servlet,优先级高的先加载
+                              <load-on-startup>的值为0或正整数,
+                              -->
+                            1.第一次被访问时,创建
+                                <load-on-startup>的值为负数,
+                            2.服务器启动时,创建
+                                <load-on-startup>的值为0或正整数,
+                    servlet的init方法,只执行一次,说明servlet在内存中只存在一个对象,servlet是单例的
+                    所以当多个用户同时访问时,可能存在线程安全问题
+                    前提:1.要有多线程  2.要有共享数据    3.线程修改了共享数据
+                    解决方法:尽量不要在servlet中定义成员变量,即使定义了成员变量,也不要对其修改值
+
+                servlet什么时候被创建
+                    默认情况下,第一次被访问时,servlet被创建
+                    可以配置执行servlet的创建时机
+
+            2.提供服务 执行service方法,执行多次
+                每次访问servlet时,servlet方法都会被调用一次
+            3.被销毁   执行destroy方法,只执行一次,在servlet被销毁之前执行,交代临终遗言
+                servlet被销毁时,服务器关闭时,servlet被销毁
+                只有服务器正常关闭时,才会执行destroy方法
+                destroy方法在servlet别销毁之前执行,一般用于释放资源
+    7.servlet 3.0
+            好处:
+                支持注解配置,可以不需要web.xml
+
+            1.创建JavaEE项目,选择servlet的版本3.0以上,可以不创建web.xml
+            2.定义一个类,实现servlet接口
+            3.复写方法
+            4.在类上使用@WebServlet注解,进行配置
+            @webServlet("资源路径")
+
+    #IDEA与tomcat的相关配置
+        1.IDEA会为每一个tomcat部署的项目单独建立一份配置文件
+        2.工作空间项目和tomcat部署的web项目
+            tomcat真正访问的是tomcat部署的web项目,tomcat部署的web项目,对应着工作空间项目,的web目录下的所有资源
+            WEB-INF目录下的资源不能被浏览器直接访问
+        3.断点调试:使用小虫子启动debug
+
+        servlet的体系结构
+            servlet---接口 5个抽象方法
+            GenericServlet ---抽象类,实现了Servlet接口 儿子  Generic:泛型
+                将servlet接口中其他的方法做了默认空实现,只讲service方法作为抽象
+                将来定义Servlet类时,可以继承GenericServlet,实现service方法即可,正在开发不会使用
+            HttpServlet   ----抽象类,孙子
+                HttpServlet:对http协议的一种封装,简化操作
+                如果是get提交就调用doGet()方法,如果是post提交就调用doPost()方法
+                1.定义类继承HttpServlet
+                2.复写doGet/doPost方法
+    Servlet相关配置
+        urlpattern:servlet访问路径
+            1.一个servlet可以定义多个访问路径 : @WebServlet({"/d5", "/dd5", "/ddd5"})
+            2.路径的定义规则:
+                1./xxx
+                2./xxx/xxx:多层路径,目录结构  方便查看,见名知意,区分功能
+                3.*.do
+
+    路径写法:
+        post提交的写法:
+            <form action="路径" method="post">
+            $.post("路径",参数,回调函数);
+        其他的都是get写法:
+            1.直接在url的路径发送请求
+            2.<a href="ddd">访问</a>
+            3.<img src="">
+            4.页面引入的js,jq都是get请求
+            5.<form action="get">
+            6.$.get("路径",参数,成功的回调函数 )
+
+           1.路径的分类:
+               1.相对路径:通过相对路径不可以确定唯一资源,不以/开头,以.开头路径 jsp不推荐相对路径
+               2.绝对路径:通过绝对路径可以确定唯一资源 以/开头的路径称为绝对路径  不写/的话,浏览器会自动给你补全虚拟目录,会报404
+               相对路径规则:确定访问当前资源和目标资源之间的相对位置关系
+                   ./:当前目录
+                   ../:后退一级
+               绝对路径规则:判断定义的路径是给谁用的? 判断请求将来从哪儿发出
+                   给客户端浏览器使用:需要加虚拟目录(项目的访问路径)
+                       使用虚拟目录动态获取 request.getContextPath()
+                   给服务器使用:不需要加虚拟目录()
+
+    面试题:
+        Servlet生命周期
+            1.创建Servlet对象,通过服务器反射Servlet对象,第一次请求才会创建(默认)
+            2.调用Servlet对象的init()方法,初始化Servlet信息,init()方法只会在创建后被调用一次
+            3.响应请求,调用service()或doGet(),doPost()方法来处理请求,这些方法是运行的,在多线程状态下的
+            4.在长时间没有被调用或者是服务器关闭时,会调用destroy()方法l来销毁Servlet对象
+
+        Servlet是什么?
+            定义:Servlet是基于Java技术的Web组件,由容器管理并产生动态的内容.Servlet引擎作为Web服务器
+            的扩展提供支持Servlet的功能,Servlet与客户端通过Servlet容器实现的请求/响应模型进行交互
+
+        Servlet是做什么的?
+        1.主要的功能在于交互式地浏览和修改数据，生成动态Web内容。
+
+        Servlet 是线程安全的吗?
+            Servlet不是线程安全的。当Tomcat接收到用户端的HTTP请求时,tomcat从线程中取出一个线程,之后找到该请求的Servlet对象
+            如果该Servlet还未被请求过,那么将进行Servlet初始化并调用Servlet的service方法,否则,直接调用service方法,因为Servlet
+            是单例的设计模式,(默认懒汉模式),如果多个HTTP请求请求的同一个servlet.那么这两个HTTP请求对应的线程将并发调用Servlet的
+            service方法,这时候，如果在Servlet中定义了实例变量或静态变量，那么可能会发生线程安全问题（因为所有的线程都可能使用这些变量）
+
+        servlet 流程
+            1.当服务器接收到客户端浏览器的请求后,会解析请求URL路径,获取访问Servlet的资源路径
+            2.查找web.xml文件,是否有对应的标签<url-pattern>标签体内容.
+            3.如果有,则在找到对应的<servlet-class>全类名
+            4.tomcat会将字节码文件加载进内存,并且创建其对象
+            5.调用其方法
+
+ServletContext对象
+    1.概念:代表整个web应用,可以和程序的容器(服务器)来通信
+    2.获取:
+        1.通过request对象获取
+            request.getServletContext()
+        2.通过HttpServlet获取
+            this.getServletContext()
+    3.功能:
+        1.获取MIME类型:
+            MIME类型:在互联网通信过程中定义的一种文件数据类型
+                格式:大类型/小类型  text/html   image/jpeg
+                作用:服务器告诉浏览器发送的数据类型,浏览器根据不同的类型做不同的展示
+                获取:String getMimeType(String file)
+
+        2.域对象:共享数据
+            1.setAttribute(String name,Object value)
+            2.getAttribute(String name)
+            3.removeAttribute()
+
+            ServletContext对象范围:共享所有用户的数据,用户所有请求的数据
+        3.获取文件的真实路径
+            1.方法:String getRealPath("")
+                1.获取Web文件夹下的文件:
+                    String realPath=context.getRealPath("xxx");
+                2.获取src文件夹的文件
+                    String realPath=context.getRealPath("WEB-INF/classes/xxx");
+
+        4.获取web.xml中配置的全局参数
+
+    4.生命周期
+        1.何时创建
+            

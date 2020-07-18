@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>QQ表情选择</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .emoji {
+            margin: 50px;
+        }
+
+        ul {
+            overflow: hidden;
+        }
+
+        li {
+            float: left;
+            width: 48px;
+            height: 48px;
+            cursor: pointer;
+        }
+
+        .emoji img {
+            cursor: pointer;
+        }
+    </style>
+    <script src="../js/jquery-3.2.1.js"></script>
+
+
+</head>
+<body>
+<div class="emoji">
+    <ul>
+        <li><img src="../imges/01.gif" height="22" width="22" alt=""/></li>
+        <li><img src="../imges/02.gif" height="22" width="22" alt=""/></li>
+        <li><img src="../imges/03.gif" height="22" width="22" alt=""/></li>
+        <li><img src="../imges/04.gif" height="22" width="22" alt=""/></li>
+        <li><img src="../imges/05.gif" height="22" width="22" alt=""/></li>
+        <li><img src="../imges/06.gif" height="22" width="22" alt=""/></li>
+        <li><img src="../imges/07.gif" height="22" width="22" alt=""/></li>
+        <li><img src="../imges/08.gif" height="22" width="22" alt=""/></li>
+        <li><img src="../imges/09.gif" height="22" width="22" alt=""/></li>
+        <li><img src="../imges/10.gif" height="22" width="22" alt=""/></li>
+        <li><img src="../imges/11.gif" height="22" width="22" alt=""/></li>
+        <li><img src="../imges/12.gif" height="22" width="22" alt=""/></li>
+    </ul>
+    <p id="word">
+        <strong>请发言：</strong>
+        <img src="../imges/12.gif" height="22" width="22" alt=""/>
+    </p>
+</div>
+
+<script>
+
+    //获取上面的img 单击事件
+    $("li img").click(function () {
+        //this是触发了事件的元素
+        //this.src
+        //获取p元素
+        //js写法
+        //$("p")[0].innerHTML += "<img src=\"../img/12.gif\" height=\"22\" width=\"22\" alt=\"\" />";
+        //jq写法
+        //append()给最后添加子元素
+        $("p").append('<img src="' + this.src + '" height="22" width="22" alt="" />');
+    })
+    $("p img").click(function () {
+        $("p>img").remove();
+    })
+</script>
+</body>
+</html>

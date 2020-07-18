@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        //Js中操作JSON
+        //1.编写一个JSON字符串
+        let jsonStr = '{"lastName":"Tom","email":"ItAmao@163.com","age":23}';
+        //json字符串转成json对象
+        let jsonObj = JSON.parse(jsonStr);
+        alert(jsonObj.lastName + "," + jsonObj.email + "," + jsonObj.age);
+        //json对象转成json字符串
+        let str = JSON.stringify(jsonObj);
+        alert(str);
+    </script>
+</head>
+<body>
+
+</body>
+</html>

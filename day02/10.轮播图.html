@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        //等页面都加载完了方法才会执行
+        //方法用于在网页加载完毕后立刻执行的操作，即当 HTML 文档加载完毕后，立刻执行某个方法。
+        window.onload = function () {
+            //根据元素的id获取一个元素
+            let img = document.getElementById("a1");
+            //alert(img);
+            //定义数字
+            let num = 1;
+
+            //定义方法
+            function aaa() {
+                num++;
+                if (num > 3) {
+                    num = 1;
+                }
+                //改变img的src属性
+                img.src = "imges/banner_" + num + ".jpg";
+            }
+
+            //计时器
+            //方法里面有两个参数,第一个参数是方法对象,第二个参数是时间的毫秒值
+            //每3秒执行一次aaa方法
+            setInterval(aaa, 3000);
+        };
+
+    </script>
+</head>
+<body>
+<img src="imges/banner_1.jpg" alt="你网速不行了" id="a1">
+</body>
+</html>
