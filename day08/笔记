@@ -1,0 +1,171 @@
+1.会话
+    会话是一组请求与响应组成,是围绕着一件相关事情所进行的请求与响应,所以这些请求与响应之间一定是需要有数据传递的,即是需要进行会话状态跟踪的
+    然而HTTP协议是一种无状态协议,在不同的请求间是无法进行数据传递的,此时就需要一种可以进行请求间数据传递的会话跟踪技术,而cookie就是这种技术
+
+    会话:一次会话包含多次请求和响应
+        1.一次会话:浏览器第一次给服务器资源发送请求,会话建立,直到有一方断开为止
+        2.功能:共享数据,在一次会话的范围内的多次请求间来共享数据
+        3.方式:
+            1.客户端会话技术:   cookie
+            2.服务器端会话技术  session
+
+2.步骤
+    cookie由服务器生成,保存在客户端的一种信息技术载体,用户在提交第一次请求后,
+    由服务器生成cookie,并将其封装到响应头中,以响应的形式发送给客户端
+    客户端接收到这个响应后,将cookie保存到客户端,当客户端再次发送同类请求后,
+    在请求中会携带保存在客户端的cookie数据,发送到服务端,由服务器进行会话跟踪
+
+3.cookie:
+    1.概念:客户端会话技术,将数据保存在客户端
+    2.快速入门:
+        1.使用步骤:
+            1.创建cookie对象,绑定数据
+                new Cookie(String name,String value);
+            2.发送cookie对象
+                response.addCookie(Cookie cookie);
+            3.获取cookie,拿到数据(返回一个cookie数组)
+                request.getCookies();
+            -----------------------------------------
+            4.设置cookie的生命周期
+                cookie.setMaxAge(秒);
+            5.设置cookie的访问路径
+                cookie.setPath(); 路径一般设置为"/"
+
+    ps:Cookie:可以将临时数据存储到客户端中,多次请求每个人可以独享cookie
+        request:存数据,一次请求存储数据
+        servletContext:存数据,一个项目下,所有人共享同一份数据
+        不同浏览器cookie不共享
+
+    3.cookie的细节:
+        1.一次可不可以发送多个cookie?
+            可以,创建多个cookie对象,使用response调用多次addCookie方法发送cookie即可
+        2.cookie允许有多个?如何覆盖?
+            必须是同一个路径,同一个名称,才可以覆盖,否则只能追加,name+path必须一致
+        3.cookie在浏览器中保存多长时间?
+            1.默认情况下,当浏览器关闭后,cookie数据被销毁
+            2.设置cookie生命周期:持久化存储
+                setMaxAge(int seconds);
+                    1.整数:持久化将cookie数据写到硬盘的文件中,持久化存储,cookie的存活时间
+                    2.负数:默认值
+                    3.0:删除cookie信息
+        3.cookie能不能存中文
+            在tomcat8版本之前,cookie不能直接存储中文数据
+            在tomcat8版本之后.cookie可以直接存储中文数据 特殊字符还是不支持,建议使用URL编码存储 URL解码解析
+        4.cookie获取范围多大(共享问题)?
+            1.假设在一个tomcat服务器中,部署多个web项目,默认情况下cookie不能共享
+                setPath(String path) :设置cookie的获取范围,默认情况下,设置当前的虚拟目录
+                如果要共享,则可以将path设置为"/"
+            2.不同的tomcat服务器间cookie共享问题?
+                setDomain(String path); 如果设置一级域名相同,那么多个服务器之间的cookie可以共享
+                例子:setDomain(".baidu.com"),那么tieba.baidu.com 和 news.baidu.com中cookie可以共享
+        5.423原则:
+            4:4kb,一个cookie存储容量有限,最大支持4kb
+            2:20个,每一个网站,最多支持20个cookie
+            3:300个,一个浏览器中所有网站最多支持300个cookie
+
+    4.cookie的特点和使用
+        1.cookie存储在客户端浏览器
+        2.浏览器对于单个cookie的大小有限制,以及对同一个域名下的总cookie数量也有限制(20)
+        作用:
+            1.cookie一般用于存储少量不太敏感的数据
+            2.在不登录的情况下,完成服务器对客户端的身份识别
+
+
+JSP入门学习
+    1.概念:
+        Java Server Pages:java服务器端页面
+            可以理解为:一个特殊的页面,既可以指定定义html标签,又可以定义java代码
+            用于简化书写
+    2.原理:
+        Jsp本质上就是一个Servlet
+
+    3.JSP的脚本:
+        JSP声明java代码方式
+        1.<% java代码 %>: 定义的java代码,在service方法中,service方法中,可以定义什么,该脚本中就可以定义什么
+        2.<%! java代码 %>:定义的java代码在jsp转换后的java类的成员位置
+        3.<%= 代码 %> : 定义的java代码会输出到页面上,输出语句中可以定义什么,该脚本中就可以定义什么
+
+    4.Jsp内置对象
+        1.在jsp页面中不需要获取和创建,可以直接使用的对象
+        2.jsp一共有9个内置对象,
+        3.request response out:可以将数据输出到页面上(字符输出流)
+            response.getWriter()和out.write()的区别
+                在tomcat服务器正在给客户端作出响应之前,会先找response缓冲区数据,在找out缓冲区数据
+                response.getWriter()数据输出永远在out.write()之前
+
+Session
+    1.概念:服务器端会话技术,在一次会话的多次请求间共享数据,将数据保存在服务器端的对象中,HttpSession
+    2.快速入门:
+        1.获取HttpSession对象:
+            HttpSession hs=request.getSession();
+        2.使用HttpSession对象:
+            Object getAttribute(String name);
+            void setAttribute(String name,Object value);
+            void removeAttribute(String name,Object value);
+
+    ps:服务器如何确保在一次会话范围内,多次获取Session对象是同一个?
+        原理:Session的底层是依赖于Cookie
+
+    4.细节:
+        1.如果cookie丢了session是否还有?
+            session的底层基于的是cookie (基于会话级别的cookie , 浏览器关闭消失)
+            session还在, 只不过id丢了,session找不回来了
+                1. 不让cookie丢失 , 设置持久化级别的cookie (很少用)
+                2. URL重写 , 不基于cookie操作 , 重写地址栏 在地址栏后面拼接  ;jsessionid=以前的id  获得到原来的对象
+
+        1.当客户端关闭后,服务器不关闭,2次获取Session是否为同一个?
+            默认情况下不是.
+            如果需要相同,则可以创建Cookie,键为JSESSIONID,设置最大存活时间,让cookie持久化保存
+
+        2.客户端不关闭,服务器关闭后,Session是否为同一个?
+            不是同一个,但是要确保数据不丢失
+                1.session的钝化
+                    在服务器正常关闭之前,将session对象系列化到硬盘上
+                2.session的活化
+                    在服务器启动后,将session文件转化为内存中的session对象即可
+
+        3.Session的实效时间?
+            1.服务器非正常关闭, 关机, 宕机(蓝屏 死机)  中断进程
+                服务器正常关闭-> 不会销毁 , 序列化内存的数据到本地,  再次启动服务器 会反序列化 将数据加载到内存 保证数据不丢失
+            2.Session对象调用invalidate()
+            3.Session默认的实效时间是30分钟
+                选择性配置修改
+                    <session-config>
+                        <session-timeout>30</session-timeout>
+                    </session-config>
+
+        4.Session的特点
+            1.session用途存储一次会话的多次请求的数据,存在服务器端
+            2.session可以存储任意类型,任意大小的数据
+                                   
+            session与cookie的区别
+                1.session存储数据在服务器端,而cookie在客户端
+                2.session没有数据大小限制,而cookie有4kb
+                3.session数据安全,cookie相对于不安全
+
+
+域对象总结(域对象: 在一定范围内 共享数据, )
+    1.cookie为什么不是域对象 ?
+        域对象指的是服务器端技术 cookie是浏览器端技术
+    request , session  ,servletContext
+        域对象的api都是一样的
+        setAttribute(String key,Object value)
+        getAttribute(String key )
+        removeAttribute( String key)
+
+    request:  一次请求中多个资源可以共享数据(请求转发)
+            创建: 请求创建
+            销毁: 响应销毁
+
+    session:  一次会话 , 有多个请求 , 共享数据
+            创建: 第一次调用request.getSession() 创建
+            销毁: 三种方式 30分钟 手动销毁 非正常关闭
+
+    servletContext:   一个项目, 多个会话 , 多个请求 共享同一份数据
+            创建: 服务器启动创建
+            销毁: 服务器关闭销毁
+
+    如何选择?
+    1. 能小不大原则
+    2. 需求优先原则 (验证码)
+
