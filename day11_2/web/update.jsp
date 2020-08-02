@@ -1,0 +1,82 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
+<!-- 网页使用的语言 -->
+<html lang="zh-CN">
+<head>
+    <!-- 指定字符集 -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>修改用户</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/jquery-3.5.1.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div class="container" style="width: 400px;">
+    <h3 style="text-align: center;">修改联系人</h3>
+    <form action="${pageContext.request.contextPath}/user/update" method="post">
+        <%--多传入一个参数 名为id的属性  type="hidden" 隐藏域: 隐藏页面的数据   --%>
+        <input type="hidden" name="id" value="${user.id}">
+        <div class="form-group">
+            <label for="name">姓名：</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="请输入姓名"
+                   value="${user.name}"/>
+        </div>
+
+        <div class="form-group">
+            <label>性别：</label>
+            <%--判断性别--%>
+            <%--<c:if test="${user.sex=='男'}">
+                <input type="radio" name="sex" value="男" checked  />男
+                <input type="radio" name="sex" value="女"  />女
+            </c:if>
+            <c:if test="${user.sex=='女'}">
+                <input type="radio" name="sex" value="男"   />男
+                <input type="radio" name="sex" value="女" checked />女
+            </c:if>--%>
+            <input type="radio" name="gender" value="男" ${user.gender=='男' ? 'checked' :"" } />男
+            <input type="radio" name="gender" value="女" ${user.gender=='女' ? 'checked' :"" } />女
+
+        </div>
+
+        <div class="form-group">
+            <label for="age">年龄：</label>
+            <input type="text" class="form-control" id="age" name="age" placeholder="请输入年龄" value="${user.age}"/>
+        </div>
+
+        <div class="form-group">
+            <label for="address">籍贯：</label>
+            <select name="address" class="form-control" id="address">
+                <option value="">请选择</option>
+                <option value="北京" ${user.address=='北京' ? 'selected' :'' }>北京</option>
+                <option value="天津" ${user.address=='天津' ? 'selected' :'' }>天津</option>
+                <option value="广东" ${user.address=='广东' ? 'selected' :'' }>广东</option>
+                <option value="湖北" ${user.address=='湖北' ? 'selected' :'' }>湖北</option>
+                <option value="湖南" ${user.address=='湖南' ? 'selected' :'' }>湖南</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="QQ">QQ：</label>
+            <input type="text" id="QQ" class="form-control" name="QQ" placeholder="请输入QQ号码" value="${user.qq}"/>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email：</label>
+            <input type="text" class="form-control" id="email" name="email" placeholder="请输入邮箱地址"
+                   value="${user.email}"/>
+        </div>
+
+        <div class="form-group" style="text-align: center">
+            <input class="btn btn-primary" type="submit" value="提交"/>
+            <input class="btn btn-default" type="reset" value="重置"/>
+            <input class="btn btn-default" type="button" value="返回"/>
+        </div>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+  要求: 必须为dao接口的全限定类名
+  相当于 该配置文件为UserDao描述文件
+  所描述的内容 都是以接口为准
+  1.描述到接口类 namespace 全限定类名
+  2.给每一个方法配置一段内容  id和方法名称必须一致
+  3.每一个方法需要配置参数 parameterType(如果没有省略)
+  4.每一个方法需要配置返回值类型 resultType(如果没有省略)
+-->
+<mapper namespace="com.itamao.java.dao.UserDao">
+    <sql id="baseSelect">
+        select * from tbl_user
+    </sql>
+
+    <resultMap id="oneToMany" type="com.itamao.java.domain.User">
+        <id property="id" column="id"></id>
+        <result property="username" column="username"></result>
+        <result property="password" column="password"></result>
+        <result property="gender" column="gender"></result>
+        <result property="email" column="email"></result>
+        <result property="telephone" column="telephone"></result>
+
+        <collection property="accounts" javaType="list" ofType="com.itamao.java.domain.Account"
+                    select="com.itamao.java.dao.AccountDao.findById" column="id">
+        </collection>
+
+    </resultMap>
+
+    <insert id="saveUser" parameterType="com.itamao.java.domain.User">
+        <selectKey resultType="int" keyColumn="id" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID();
+        </selectKey>
+        insert into tbl_user values (#{id},#{username},#{password},#{gender},#{email},#{telephone})
+    </insert>
+
+    <select id="selectIf" resultType="com.itamao.java.domain.User" parameterType="com.itamao.java.domain.User">
+        <include refid="baseSelect"></include>
+        <where>
+            <if test="username!=null and username!=''">
+                and username=#{username}
+            </if>
+            <if test="gender!=null and gender!=''">
+                and gender=#{gender}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectChoose" parameterType="com.itamao.java.domain.User" resultType="com.itamao.java.domain.User">
+        <include refid="baseSelect"></include>
+        <choose>
+            <when test="username!=null and username!=''">
+                where username=#{username}
+            </when>
+            <when test="gender!=null and gender!=''">
+                where gender=#{gender}
+            </when>
+            <otherwise>
+                where 1=1
+            </otherwise>
+        </choose>
+
+    </select>
+
+    <update id="updateUser" parameterType="com.itamao.java.domain.User">
+        update tbl_user
+        <set>
+            <if test="username!=null and username != ''">
+                username=#{username},
+            </if>
+            <if test="password!=null and password != ''">
+                password=#{password},
+            </if>
+            <if test="gender!=null and gender != ''">
+                gender=#{gender},
+            </if>
+            <if test="email!=null and email != ''">
+                email=#{email},
+            </if>
+            <if test="telephone!=null and telephone != ''">
+                telephone=#{telephone},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <select id="selectForeachArray" parameterType="int[]" resultType="com.itamao.java.domain.User">
+        <include refid="baseSelect"></include>
+        where id in
+        <foreach collection="array" open="(" close=")" item="id" separator=",">
+            #{id}
+        </foreach>
+    </select>
+
+    <select id="selectForeachCollection" parameterType="list" resultType="com.itamao.java.domain.User">
+        <include refid="baseSelect"></include>
+        where id in
+        <foreach collection="list" open="(" close=")" separator="," item="id">
+            #{id}
+        </foreach>
+    </select>
+
+    <select id="selectByQueryVo" parameterType="com.itamao.java.domain.QueryVo"
+            resultType="com.itamao.java.domain.User">
+        <include refid="baseSelect"></include>
+        where id in
+        <foreach collection="idsList" open="(" close=")" item="id" separator=",">
+            #{id}
+        </foreach>
+    </select>
+
+    <select id="findAll" resultMap="oneToMany">
+        select * from tbl_user;
+    </select>
+</mapper>

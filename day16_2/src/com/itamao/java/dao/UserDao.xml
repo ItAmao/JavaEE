@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+  要求: 必须为dao接口的全限定类名
+  相当于 该配置文件为UserDao描述文件
+  所描述的内容 都是以接口为准
+  1.描述到接口类 namespace 全限定类名
+  2.给每一个方法配置一段内容  id和方法名称必须一致
+  3.每一个方法需要配置参数 parameterType(如果没有省略)
+  4.每一个方法需要配置返回值类型 resultType(如果没有省略)
+-->
+<mapper namespace="com.itamao.java.dao.UserDao">
+
+    <!--增加-->
+    <insert id="insertUser" parameterType="com.itamao.java.dao.UserDao">
+        insert into
+        tbl_user(id,username,password,money)
+        values(#{id},#{username},#{password},#{money})
+    </insert>
+
+    <select id="selectAllUser" resultType="com.itamao.java.domain.User">
+      select * from tbl_user
+    </select>
+
+    <!--    &lt;!&ndash;删除&ndash;&gt;-->
+    <!--    <delete id="方法名" parameterType="参数类型">-->
+    <!--        &lt;!&ndash;sql语句&ndash;&gt;-->
+    <!--    </delete>-->
+
+    <!--    &lt;!&ndash;修改&ndash;&gt;-->
+    <!--    <update id="方法名" parameterType="参数类型">-->
+    <!--        &lt;!&ndash;sql语句&ndash;&gt;-->
+    <!--    </update>-->
+
+    <!--    &lt;!&ndash;查询&ndash;&gt;-->
+    <!--    <select id="方法名" parameterType="参数类型" resultType="返回值类型">-->
+    <!--        &lt;!&ndash;sql语句&ndash;&gt;-->
+    <!--    </select>-->
+
+</mapper>

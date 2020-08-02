@@ -1,0 +1,59 @@
+数据库
+    1.概念:本质其实就是将数据操作到文件中,通过一些特殊的软件而已
+
+sql:
+    SQL语言一共分为四大类:
+        DDL:数据库定义语言,操作数据库和数据库表的创建(create),删除(drop)
+        DCL:数据库权限语言,操作数据库用户的权限的
+        DML:数据库操作语言,增删改数据 Insert(添加) update(修改) delete(删除)
+        TCL:数据库事务语言,专门操作事务
+
+SQL通用语法
+    1.sql语句可以单行或者多行书写,以分号结尾
+    2.可使用空格和缩进来增强语句的可读性
+    3.MYSQL数据库的SQL语句不区分大小写,关键字建议使用大写
+
+基本语法:
+    mysql -u用户名 -p密码
+    show database; 显示数据库
+    create database 数据库名称;  建立数据库
+    drop database 数据库名称;  删除
+    use 数据库名; 使用数据库
+    show tables; 展示表
+    drop table student; 删除表
+    alter table 表名 add/modify/change/drop 不同语法
+    alter table 表名 add 字段名称 字段类型
+    alter table 表名 modify 字段名称 字段类型 (modify只能修改类型)
+    alter table 表名 change 旧的列名 新的列名 新的类型
+    alter table 表名 drop 列名
+    rename table 旧表名 to 新表名
+    create table 表名 like 存在表名 复制表
+
+    增:
+    insert into 表名(字段名称1,字段名称2,字段名称3...)values(值1,值2,值3...);
+    insert into 表名 values(值1,值2,值3)
+
+    蠕虫复制
+    1.创建一张结构一样的表
+    create table stu2 like stu;
+    2.将stu表数据复制给stu2
+    insert into stu2 select * from stu;
+    insert into stu2 插入某个表 select * from student 查询某个表;
+
+    删:
+    delete from 表名 (清空数据)
+    delete from 表名 where 条件
+
+    truncate 和 delete 的区别
+    1.delete:清空数据,只是删除数据,对于序号,序列,不重置
+    2.truncate:清空数据,重构表,先删除表,再次创建一张一样的表,序号从初始值开始
+
+    id:只是一个唯一标识而已,不存在任何意义,断序无所谓
+
+    改:
+        update 表名 set 字段名称=字段值,字段名称=字段值,字段名称=字段值
+        update 表名 set 字段名称=字段值,... where 条件
+
+    查:单表
+    select * from xxx;
+    ....

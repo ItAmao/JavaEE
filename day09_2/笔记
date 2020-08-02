@@ -1,0 +1,23 @@
+技术选型
+    1.web层
+        a:servlet:前端控制器
+        b:html:试图
+        c:Filter:过滤器
+        d:BeanUtils:数据封装
+        e:jackson:json序列化工具
+    2.service层
+        a:javamail:java发送邮件工具
+        b:redis:nosql内存数据库
+        c:jedis:java的redis客户端
+    3.Dao层:
+        a:mysql:数据库
+        b:druid:数据库连接池
+        c:jdbcTemplate:jdbc工具
+
+    第一步:创建数据库
+    第二步:功能实现
+        1.注册
+
+        2.登录
+        3.退出
+

@@ -1,0 +1,178 @@
+<%--
+  User: ItAmao
+  Date: 2020/7/26
+  Time: 17:02
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-
+scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>文件上传</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+
+        #canvas {
+            position: relative;
+            float: left;
+            width: 100%;
+            height: 100%;
+            display: block;
+            background-color: #000;
+        }
+
+        #aaa {
+            position: absolute;
+            float: left;
+            text-align: center;
+            background-color: black;
+        }
+
+
+    </style>
+    <script src="js/jquery-3.5.1.js"></script>
+</head>
+<div id="aaa">
+    <form action="${pageContext.request.contextPath}/upload2Servlet" method="post" enctype="multipart/form-data">
+        文件上传: <input type="file" name="MyFile" id="myfile"> <br>
+        <input type="submit" value="提交" id="submit">
+    </form>
+    <canvas id="canvas"></canvas>
+</div>
+
+</body>
+<script>
+
+    // $("#canvas").click(function () {
+    //     alert("给我资料的压缩包,别乱点哦");
+    // });
+
+    var canvas = document.querySelector("#canvas");
+    var context = canvas.getContext('2d');
+    var cw, ch;
+    var stars = [];
+
+    //当窗口大小改变时
+    ~~function setSize() {
+        window.onresize = arguments.callee;
+        cw = window.innerWidth;
+        ch = window.innerHeight;
+        canvas.height = ch;
+        canvas.width = cw;
+    }();
+
+    function Star() {
+    };
+    Star.prototype = {
+        init: function () {
+            this.w = rand(0, cw);
+            this.h = rand(0, ch);
+            this.r = 1.5;
+            this.speedX = rand(-1, 1);
+            this.speedY = rand(-1, 1);
+        },
+        draw: function () {
+            context.fillStyle = 'white';
+            context.beginPath();
+            context.arc(this.w, this.h, this.r, 0, Math.PI * 2);
+            context.fill();
+        },
+        move: function () {
+            this.w += this.speedX;
+            this.h += this.speedY;
+            if (this.w < 0 || this.w > cw) {
+                this.speedX *= -1;
+            }
+            if (this.h < 0 || this.h > ch) {
+                this.speedY *= -1;
+            }
+            this.draw();
+        }
+    }
+
+    function Line() {
+    };
+    Line.prototype = {
+        //星星之间的连线
+        initStarLine: function () {
+            this.colorStar = '#6699cc';
+            this.colorStop = '#9966cc';
+        },
+        //鼠标与星星之间的连线
+        initNewLine: function () {
+            this.colorStar = '#6699cc';
+            this.colorStop = '#ff6666';
+        },
+        drawLine: function (ow, oh, nw, nh) {
+            var dx = ow - nw;
+            var dy = oh - nh;
+            var d = Math.sqrt(dx * dx + dy * dy);
+            if (d < 60) {
+                var line = context.createLinearGradient
+
+                (ow, oh, nw, nh);
+                context.beginPath();
+                context.moveTo(ow, oh);
+                context.lineTo(nw, nh);
+                line.addColorStop(0, this.colorStar);
+                line.addColorStop(1, this.colorStop);
+                context.StrokeWidth = 1;
+                context.strokeStyle = line;
+                context.stroke();
+                context.restore();
+            }
+        }
+    }
+
+    //生成范围在min~max之间的随机数
+    function rand(min, max) {
+        return Math.random() * (max - min) + min;
+    }
+
+    function create(num) {
+        for (var i = 0; i < num; i++) {
+            var star = new Star();
+            star.init();
+            star.draw();
+            stars.push(star);
+        }
+    }
+
+    create(400);
+    setTimeout(function () {
+        context.clearRect(0, 0, cw, ch);
+        for (var i of stars) {
+            i.move();
+            for (var j = 0; j < stars.length / 2; j++) {
+                var line = new Line();
+                line.initStarLine();
+                line.drawLine(i.w, i.h, stars[j].w, stars[j].h);
+            }
+        }
+        setTimeout(arguments.callee, 1000 / 60);
+    }, 1000 / 60);
+
+    document.onmousemove = function (e) {
+        var e = e || window.event;
+        var mw = e.clientX;
+        var mh = e.clientY;
+        for (var i of stars) {
+            var line = new Line();
+            line.initNewLine();
+            line.drawLine(i.w, i.h, mw, mh);
+        }
+    }
+</script>
+</html>

@@ -1,0 +1,113 @@
+web的三大组件:servlet filter listener
+    servlet:服务端的小程序 servlet applet
+    listener:监听器,(监控):为了监听某些特殊事件,当事件触发的时候,监听器就启动了
+    filter:过滤器:过滤掉某些不需要的内容
+
+1.监听器listener
+    监听器有八大,分为了三组
+        1.监听域对象创建和销毁
+            servlet:三大域对象 request response ServletContext
+            JSP:四大域对象:request response application page
+
+        1.监听web域对象创建和销毁
+        2.鉴定web域对象中,数据变化的监听器
+        3.特殊javaBean 2个监听器监听域对象session特殊javaBean操作(钝化/活化)
+                钝化:当服务器正常关闭时,还存活着的session(在设置时间内没有销毁)
+                    会随着服务器的关闭被以文件(“SESSIONS.ser”)的形式存储在tomcat 的work 目录下
+                活化:当服务器再次正常开启时,服务器会找到之前的“SESSIONS.ser” 文件，从中恢复之前保存起来的Session 对象，
+
+        ServletRequest
+            创建:请求开始创建
+            销毁:响应结束销毁
+        HttpSession
+            创建:默认第一次调用request.getSession();
+            销毁:三种销毁方式   1.tomcat默认超时30分钟    2.手动调用invalidate()  3.服务器关闭
+        ServletContext(!important)
+            创建:项目启动创建 (加载资源-读取数据-全局变量设置...)
+            销毁:服务器关闭销毁(释放资源)
+
+    ServletContext入门
+        1.创建类
+        2.实现某接口(ServletContextListener)
+        3.实现方法
+        4.配置文件
+
+1.Filter:过滤器(筛子)
+
+    为什么要使用过滤器?
+        在我们实际项目中,我们对访问某些资源的请求需要进行调节的筛选、过滤.当这个请求满足特定的情况,才能让这个
+        请求访问目标资源,如果不满足条件,就不让访问目标资源
+
+    1.概述:
+        web中的过滤器:当访问服务器的资源时,过滤器可以将请求拦截下来,完成一些特殊的功能
+    2.作用:
+        一般用于完成通用的操作,如:登录验证,统一编码处理,敏感字符处理...
+    3.快速入门:
+        1.步骤:
+            1.定义一个类,实现接口Filter
+            2.复写方法
+            3.配置拦截路径
+                1.web.xml
+                2.注解
+
+    4.过滤器注解:
+        1.web.xml
+            <filter>
+                <filter-name>demo2</filter-name>
+                <filter-class>com.itamao.web.filter.FilterDemo2</filter-class>
+            </filter>
+            <filter-mapping>
+                <filter-name>demo2</filter-name>
+                <!-- 拦截路径 --!>
+                <url-pattern>/*</url-pattern>
+            </filter-mapping>
+            执行过程:(默认情况下,请求到达服务器先找到filter,filter的执行时机在servlet之前)
+                1.匹配filter
+                2.找到Filter类
+                3.执行filter的过滤方法
+                4.当遇到放行时,回到配置文件找到匹配的servlet执行其方法
+                5.回到放行代码
+
+        2.过滤器执行流程
+            1.执行过滤器
+            2.执行放行后的资源
+            3.回来执行过滤器放行代码下边的代码
+        3.过滤器生命周期方法
+            1.init:在服务器启动后,会创建Filter对象,然后调用init方法,只执行一次,用于加载资源
+            2.doFilter:每一次请求被拦截资源后,会执行,执行多次
+            3.destroy:在服务器关闭后,filter对象被销毁,如果服务器是正常关闭,则会执行destroy方法.只会执行一次,用于释放资源
+
+        4.过滤器配置详解
+            拦截路径配置:
+                1.(完全匹配)具体的资源路径
+                2.(不完全匹配)目录拦截:
+                3.(后缀名匹配)后缀名拦截:*.jsp 访问所有后缀名.jsp资源时,过滤器都会被执行,后缀名不能加/
+
+            拦截方式配置:(资源被访问的方式)
+                注解配置:
+                    配置:dispatcherTypes
+                        1.REQUEST:默认值,浏览器直接请求资源
+                        2.FORWARD:转发访问资源
+                        3.INCLUDE:包含访问资源
+                        4.ERROR:错误挑战资源
+                        5.ASYNC:异步访问资源
+                web.xml配置
+
+        5.过滤器链(配置多个过滤器)
+
+
+1.filter的路径设置和servlet的路径设置
+    filter路径设置:
+        1.完全匹配  2.不完全匹配 3.后缀名匹配
+    servlet路径设置:
+        1.完全匹配 2.不完全匹配  3.后缀名匹配 4.缺省匹配
+
+2.filter生命周期
+    创建：服务器启动就创建
+    doFilter方法 : 拦截方法( 每一次拦截到 就访问 )
+    销毁：服务器关闭 销毁
+
+3.filter和dispatcher设置request和forward区别
+    dispatcher 设置过滤器的拦截时机
+        默认是REQUEST  请求开始进行拦截
+        FORWARD 请求转发进行拦截

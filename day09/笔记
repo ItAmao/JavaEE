@@ -1,0 +1,193 @@
+JSP:(Jsp本质是一个Servlet)
+    执行的基本步骤
+        1.找到tomcat下的web.xml
+        2.匹配到某个路径
+        3.执行jspServlet
+        4.这个servlet会找到jsp并解析jsp,将jsp转换成一个java文件并编译执行
+        5.如何证明类就是servlet,类实现servlet就是servlet类
+            创建的java类,继承了HttpJspBase,这个类继承HttpServlet跟servlet有关
+
+    1.概述:
+    HTML代码与java代码共同存在,其中,HTML代码用来实现网页中静态内容的显示,java代码用来实现网页中动态内容的显示,为了传统HTML有所区别
+    JSP文件的扩展名为.jsp
+
+    2.JSP技术所开发的web应用程序是基于java的,本质上就是一个Servlet,它可以用一种简捷而快速的方法从java程序生成web页面
+        特征:
+            1.跨平台
+            2.业务代码相分离
+            3.组件重用
+            4.预编译
+
+    既然有了jsp,为什么还需要servlet
+        各负其责。JSP是显示层的。重在显示。Servelt 是控制层的，重在业务逻辑。
+
+    1.指令
+        1.作用:用于配置JSP页面以及导入资源文件
+        2.格式:
+            1.声明脚本:类体的代码
+                <%! %>
+            2.脚本片段:方法体代码
+                <% %>
+            3.输出脚本:print(参数) 所传递的参数
+                <%= %>
+
+        3.分类:<%@ taglib/include/page %>
+            1.page      配置JSP页面
+                contentType:等同于response.setContentType()
+                    1.设置响应体的mime类型以及字符集
+                    2.设置当前JSP页面的编码(只能是高级开发工具) 否则需要设置pageEncoding="编码格式"
+                    import:导包
+                    errorPage:当前页面发生异常后,会自动跳转到指定的错误页面
+                    isErrorPage:标识当前页面是否是错误页面
+                        true:是,可以使用内置对象Exception
+                        false:否,默认值 不可以使用内置对象
+
+            2.include   页面包含(静态包含)的,一个页面可以引入另一个页面(抽取公共代码)
+            3.taglib    导入资源
+                <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+                prefix:前缀,自定义的
+    2.注释
+        1.html注释 <!-- -->   只能注释html代码片段
+        2.jsp注释  <%-- --%>  能注释所有
+
+    3.内置对象(靠生命周期自己去推导)
+        jsp最终要转换成servlet代码,转换的过程会产生一些特殊的对象,而这些对象是一件创建好的,称之为内置对象,不需要new
+        如果需要看到九大内置对象,需要在page指令中加入一个属性 isErrorPage="true"
+        isErrorPage="true":本页面是否为错误处理页面 true表示 错误处理的页面,多一个属性 exception
+        在jsp页面中不需要创建,直接使用的对象
+        一共有9个:
+            1.pageContext   真实类型;   PageContext             作用:动态获得服务器虚拟路径名称,还可以获取其他8个内置对象(通过.get),能操作四大域
+
+            2.request       真实类型:   HttpServletRequest      作用:一次请求访问的多个资源(转发)
+            3.session       真实类型:   HttpSession             作用:一次会话的多个请求间
+            4.application   真实类型:   ServletContext          作用:多个用户间共享数据
+            5.response      真实类型:   HttpServletResponse     作用:响应对象
+            6.page          真实类型:   Object                  作用:当前页面(Servlet)的对象
+            7.out           真实类型:   JspWriter               作用:输出对象,可以吧数据输出到页面上
+            8.config        真实类型:   ServletConfig           作用:Servlet配置对象
+            9.exception     真实类型:   Throwable               作用:异常对象
+
+        记忆流程:(根据生命周期)
+            1.jsp是一个类,所以就会有this
+            2.jsp是一个servlet,servlet就有生命周期
+            2.1 init(ServletConfig) 表示servlet的配置对象 config
+            2.2 通过config获取servletContext() ----> application
+            2.3 service(request,response) -----> request和response
+            2.4 通过request可以得到session ------->session
+            2.5 通过response可以得到 out  ------->out
+            2.6 整个程序可以能异常 ---------> exception
+            2.7 pageContext
+
+    jsp动作标签
+        jsp提供特殊的标签,作用:引入其他页面
+        include:包含  作用:引入其他页面(静态)
+        jsp动作:包含   作用:引 入其他页面(动态)
+            静态包含:编译的时候,代码就在一起了
+            动态包含:程序运行过程中,动态组合在一起输出给浏览器
+
+EL表达式
+    1.概念:Expression language 表达式语言
+    2.作用:替换和简化JSP   页面中java代码的编写
+    3.语法:${表达式}
+    4.注意:
+        jsp默认支持el表达式,如果要忽略el表达式
+            1.设置JSP中配置指令 isELIgnored="true",忽略当前jsp页面中所有的el表达式
+            2.\${表达式}:忽略当前这个el表达式
+    5.使用:
+        1.运算:
+            运算符
+                1.算数运算符
+                2.比较运算符
+                3.逻辑运算符
+                4.空运算符: empty()
+                功能:用于判断字符串,集合,数组对象是否为null并且长度是否为0
+                ${empty list} 表示判断字符串,集合,数组对象是否为null,并且长度为0
+                ${not empty str}:表示判断字符串,集合,数组对象是否不为null,并且长度大于0
+
+        2.获取值:
+            1.el表达式只能从域对象中获取值
+            2.语法: ${域名称.键名} : 从指定域中获取指定键的值
+                1.域名称:
+                    1.pageScope -->  pageContext
+                    2.requestScope---> request
+                    3.sessionScope ---> session
+                    4.applicationScope--->application(ServletContext)
+                    举例:在request域中存name=张三
+                    获取 ${requestScope.name}
+                2.${键名}:表示依次从最小的域中查找是否有该键对应的值,直到找到为止
+                注意:1.从四大域中依次获得数据,所以在开发中key不要重复
+                    2.从域中获得数据,有就展示,如果没有展示空白,空串
+
+                动态获取:项目虚拟目录名称
+                ${pageContext.request.contextPath} 动态获得:项目虚拟目录名称
+
+            3.获取对象 list集合,map集合的值
+                1.对象:${域名称.键名.属性名}
+                    本质上会去调用对象getter方法
+                2.List集合:${域名称.键名[索引]}
+                3.Map集合:${域名称.键名.key}
+                         ${域名称.键名["key名称"]}
+
+JSTL标签:
+    1.概念:JavaServer Pages Tag Library   JSP标准标签库
+            是由Apache组织提供的开源的免费的jsp标签
+
+    2.作用:用于简化和替换jsp页面上的java代码
+    3.使用步骤:
+        1.导入jstl相关 jar包
+        2.引入标签库 taglib <%@ taglib %>
+        3.使用标签
+
+    4.常用的jstl标签
+        1.if        相当于java代码的if语句
+            1.属性:
+                test必须属性,接受boolean表达式
+                    如果表达式为true,则显示if标签体内容,如果为false,则不显示标签体内容
+                    一般情况下,test属性值会结合el表达式一起使用
+            2.注意:
+                c:if标签没有else情况,想要有,写2个
+
+        2.choose    相当于java代码的switch语句
+                1.使用choose标签声明  相当于switch声明
+                2.使用when标签做判断   相当于case
+                3.使用otherwise标签做其他情况的声明:相当于default
+
+        3.foreach   相当于java代码的for语句
+                1.begin:开始值
+                2.end:结束值
+                3.var:临时变量
+                4.step:步长
+                5.varStatus:循环状态对象
+                    index:容器中元素的索引 从0开始
+                    count:循环次数,循环次数从1开始
+
+MVC开发模式:(理解)  !important  开发模式
+    1.jsp演变历史
+        1.早期只有servlet,只能使用response输出标签数据,非常麻烦
+        2.后来有了jsp,简化了servlet开发,如果过度使用jsp,难于维护,难于分工
+        3.在后来,javaweb开发,借鉴了mvc的开发模式,使得程序的设计更加合理性
+
+    2.MVC
+        1.M:model,    模型    JavaBean
+            完成具体的业务操作
+            业务逻辑操作:(数据库的增删改查),封装对象
+
+        2.V:view,     视图    JSP
+            展示数据
+
+        3.C:Controller 控制器  Servlet
+            1.获取客户端的输入,
+            2.调用模型,
+            2.将数据交给视图展示
+
+    3.三层架构:
+        1.表示层-web:包含controller和view 作用:负责与用户交互
+        2.service层:业务逻辑层,数据的校验, 作用:处理数据,封装数据
+        3.dao层:数据库访问层       作用:操作数据库
+
+    3.优缺点:
+        优点:
+            1.耦合性低,方便维护,可以利于分工协作
+            2.重用性高
+        缺点:
+            1.使得项目架构变得复杂,对开发人员要求高

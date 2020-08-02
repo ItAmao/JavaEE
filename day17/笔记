@@ -1,0 +1,33 @@
+1.添加后返回组件id
+    方式一:
+        映射文件:
+            useGeneratedKeys="true";
+            keyProperty="实体类中用于接收主键的属性"
+            keyColumn="数据库的主键列"
+
+<insert id="saveUser" parameterType="com.itheima.domain.User"
+useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+    insert into tbl_user values(#{id},#{username},#{password},#{gender} , #{email},#{telephone})
+</insert>
+
+
+    方式二:
+        映射文件:
+            <selectKey>标签:查询主键
+            order="AFTER" 表示执行完添加后,执行selectKey里面的sql
+            keyProperty="实体类中用于接收主键的属性"
+            keyColumn="数据库的主键列"
+            resultType: 返回值的类型
+
+<insert id="saveUser" parameterType="com.itamao.java.domain.User">
+        <selectKey resultType="int" keyColumn="id" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID();
+        </selectKey>
+        insert into tbl_user values (#{id},#{username},#{password},#{gender},#{email},#{telephone})
+</insert>
+
+
+2.动态sql
+
+
+

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+  要求: 必须为dao接口的全限定类名
+  相当于 该配置文件为UserDao描述文件
+  所描述的内容 都是以接口为准
+  1.描述到接口类 namespace 全限定类名
+  2.给每一个方法配置一段内容  id和方法名称必须一致
+  3.每一个方法需要配置参数 parameterType(如果没有省略)
+  4.每一个方法需要配置返回值类型 resultType(如果没有省略)
+-->
+<mapper namespace="com.itamao.java.dao.AccountDao">
+
+    <resultMap id="oneToOne" type="com.itamao.java.domain.Account">
+        <id property="id" column="id"></id>
+        <result property="money" column="money"></result>
+        <result property="address" column="address"></result>
+        <result property="aname" column="aname"></result>
+        <result property="uid" column="uid"></result>
+
+        <association property="user" javaType="com.itamao.java.domain.User">
+            <id property="id" column="userid"></id>
+            <result property="username" column="username"></result>
+            <result property="password" column="password"></result>
+            <result property="gender" column="gender"></result>
+            <result property="email" column="email"></result>
+            <result property="telephone" column="telephone"></result>
+        </association>
+
+
+    </resultMap>
+
+    <select id="findAll" resultMap="oneToOne">
+        select *,tu.id as userid from tbl_account as ta
+        left join tbl_user as tu
+        on ta.uid=tu.id
+    </select>
+
+    <select id="findById" resultType="com.itamao.java.domain.Account" parameterType="int">
+        select * from tbl_account where uid = #{uid}
+    </select>
+</mapper>

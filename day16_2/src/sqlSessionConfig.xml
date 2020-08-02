@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--
+      此配置文件的标签顺序 不允许随便替换-->
+    <!--
+
+    properties 加载其他的properties文件
+    -->
+    <properties resource="db.properties"></properties>
+
+    <!--别名注册器-->
+    <typeAliases>
+        <!--
+          批量设置
+            只要在某个包下 所有的类全部使用别名 , 别名的名字就是类名 不区分大小写
+        -->
+        <package name="com.itamao.java.domain"></package>
+    </typeAliases>
+
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <package name="com.itamao.java.dao"></package>
+    </mappers>
+</configuration>

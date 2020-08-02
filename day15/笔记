@@ -1,0 +1,37 @@
+1.JDBC的概述
+    jdbc是一套接口,用java来操作数据库,
+    好处:使用同一套代码,快速切换不同的数据库
+    1.数据持久化:
+        持久化:把数据保存到可掉电式存储设备中以供之后使用,
+
+    2.JDBC介绍
+        jdbc是独立于特定数据库管理系统,通用的SQL数据库存取和操作的公共接口,定义了用来访问数据库的标准java类库
+
+    3.体系结构
+        JDBC接口（API）包括两个层次：
+        面向应用的API：JavaAPI，抽象接口，供应用程序开发人员使用（连接数据库，执行SQL语句，获得结果）
+        面向数据库的API：Java Driver API，供开发商开发数据库驱动程序用。
+
+    4.JDBC程序编写步骤
+        1.导入java.sql包
+        2.获取数据库的连接
+
+2.获取连接
+    最终版的好处:
+        1.实现了数据和代码的分离,解耦
+        2.如果需要修改配置文件信息,可以避免程序重新打包
+
+3.使用PreparedStatement实现CRUD操作
+    1.操作和访问数据库
+
+4.ORM编程思想
+    1.一个数据表对应一个java类
+    2.表中的一条记录对应java类的一个对象
+    3.表中的一个字段对应java类的一个属性
+
+        获取列数:int columnCount=rsmd.getColumnCount();
+        获取列值:Object columnValue=resultSet.getObject(int index)
+        获取列的别名:String columnLabel=rsmd.getColumnLabel(int index)
+
+5.事物:多个逻辑单元操作,看做一个事务,要么同时成功,要么同时失败
+
